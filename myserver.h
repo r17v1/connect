@@ -1,3 +1,4 @@
+//STARTS THE SERVER AND ACCEPS INCOMING CONNECTIONS See the .cpp file for more info
 #ifndef MYSERVER_H
 #define MYSERVER_H
 #include<QTcpServer>
@@ -15,7 +16,7 @@ public:
 
     void startServer();
 
-    void updateThreads();
+   // void updateThreads();
 
 signals:
 
@@ -23,10 +24,6 @@ public slots:
 
 protected:
     void incomingConnection(qintptr socketDescriptor);
-
-    list<MyThread*>threads;
-
-
 };
 
 #endif // MYSERVER_H

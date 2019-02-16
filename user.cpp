@@ -6,12 +6,12 @@ User::User(QObject *parent) : QObject(parent)
     validity=false;
 }
 
-void User::setLoginDetails(string id, string password)
+void User::setLoginDetails(string id, string password) //sets the required username and password
 {
     username=id;
     this->password=password;
 }
-void User::update(QTcpSocket *socket)
+void User::update(QTcpSocket *socket)                 //updates messages and friend lists.
 {
     while(pendingFriends.size())
     {
@@ -29,7 +29,7 @@ void User::update(QTcpSocket *socket)
     }
 }
 
-bool User::login(string password)
+bool User::login(string password)                     //allows log in if password matches
 {
     if(this->password==password)
     {
@@ -38,7 +38,7 @@ bool User::login(string password)
     return validity;
 }
 
-void User::addMessage(string sender, string message)
+void User::addMessage(string sender, string message) //adds a message to the message que. After automation this might no longer be required
 {
     string format ="message-";
      format += "["+sender+"]";
@@ -48,7 +48,7 @@ void User::addMessage(string sender, string message)
     pendingMessages.push(format);
 }
 
-void User::addFriend(string id)
+void User::addFriend(string id)                        //adds a friend to the friend que. After automation this might no longer be required
 {
 
     string format="friend--";
@@ -57,12 +57,12 @@ void User::addFriend(string id)
     pendingFriends.push(format);
 }
 
-bool User::isValid()
+bool User::isValid()                                   //returns wheather user is logged in or not
 {
     return validity;
 }
 
-string User::getID()
+string User::getID()                                    //returns the user name
 {
     return username;
 }

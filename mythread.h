@@ -1,3 +1,4 @@
+//MANAGES THREADS See .cpp file for detailed info
 #ifndef MYTHREAD_H
 #define MYTHREAD_H
 #include<QThread>
@@ -15,19 +16,18 @@ class MyThread : public QThread
 public:
     explicit MyThread(int id, QObject *parent = 0);
     void run();
-    void addToWrite(QByteArray str);
 signals:
     void error(QTcpSocket::SocketError socketerror);
 public slots:
-    void readyRead();
+    void readyRead(); //handles incoming data inside this. So requests from the client gets resolved here.
+
     void disconnected();
 
 private:
     void write(QByteArray str);
-    QTcpSocket *socket;
+    QTcpSocket *socket;  //socket pointing to the client connected to this thread
     int socketDescriptor;
-    queue<QByteArray> pendingData;
-    User *user;
+    User *user; //after log in whis will point to the user who's socket is connected to this thread.
 
 
 };

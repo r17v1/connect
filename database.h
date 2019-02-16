@@ -1,3 +1,4 @@
+//THIS CLASS WILL PROBABLY ONLY CONTAIN STATIC FUNCTIONS THAT GETS DATABASE STUFF DONE
 #ifndef DATABASE_H
 #define DATABASE_H
 
@@ -15,9 +16,9 @@ class Database : public QObject
     Q_OBJECT
 public:
     explicit Database(QObject *parent = nullptr);
-    //bool validate(string user, string password );
-    static void addUsers();
-    static void printUsers();
+
+    static void loadUsers();                             //loads all users from database to the users map
+    static void printUsers();                           //prints all user names
 
 signals:
 

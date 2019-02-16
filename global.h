@@ -5,7 +5,7 @@
 #include<map>
 
 namespace global {
-   extern map<string,User*>users;
+   extern map<string,User*>users;  //users is a map that contains the pointer to all users. can be identified through the username
 }
 
 
