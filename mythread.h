@@ -20,6 +20,7 @@ signals:
     void error(QTcpSocket::SocketError socketerror);
 public slots:
     void readyRead(); //handles incoming data inside this. So requests from the client gets resolved here.
+    void updateUser();//updates user pending stuff (messages/friends)
 
     void disconnected();
 

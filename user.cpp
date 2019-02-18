@@ -46,6 +46,8 @@ void User::addMessage(string sender, string message) //adds a message to the mes
      //std::cout<<format<<std::endl;
     messages.push_back(format);
     pendingMessages.push(format);
+
+    emit needUpdate();
 }
 
 void User::addFriend(string id)                        //adds a friend to the friend que. After automation this might no longer be required
@@ -55,6 +57,7 @@ void User::addFriend(string id)                        //adds a friend to the fr
     format+= '['+id+']';
     friends.push_back(format);
     pendingFriends.push(format);
+    emit needUpdate();
 }
 
 bool User::isValid()                                   //returns wheather user is logged in or not
@@ -67,3 +70,7 @@ string User::getID()                                    //returns the user name
     return username;
 }
 
+void User::logOut()
+{
+    validity=false;
+}

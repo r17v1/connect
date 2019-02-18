@@ -5,7 +5,6 @@
 #include <QObject>
 #include<list>
 #include<queue>
-//#include"database.h"
 #include<QTcpSocket>
 using namespace std;
 
@@ -22,8 +21,10 @@ public:
     void setLoginDetails(string id, string password);   //sets username and password to check
     void update(QTcpSocket *socket);                    //updates pending stuff (messages, friends etc)
     string getID();                                     //returns user id
+    void logOut();
 
 signals:
+    void needUpdate();
 
 public slots:
 
