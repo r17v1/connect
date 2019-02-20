@@ -8,8 +8,8 @@ MyServer::MyServer(QObject *parent):
 
 void MyServer::startServer()
 {
-    Database::loadUsers();   //at the start of the server, all users added to the database(online or offline both) are loaded to the map.
-    Database::printUsers(); //and then their usernames are printed for convenience.
+    Database::initialize();  //at the start of the server, all users added to the database(online or offline both) are loaded to the map
+                             //also their data such as message history and friend list gets loaded
 
     if(!this->listen(QHostAddress::Any,1234))   //Allows connection of anything that wants to connect to port 1234
         qDebug()<<"Could not start server!";

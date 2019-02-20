@@ -6,6 +6,7 @@
 #include<QDebug>
 #include<queue>
 #include"global.h"
+#include"database.h"
 
 #include"user.h"
 using namespace std;

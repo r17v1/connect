@@ -35,3 +35,5 @@ HEADERS += \
     database.h \
     global.h \
     user.h
+
+DISTFILES +=

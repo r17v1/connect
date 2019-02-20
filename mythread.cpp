@@ -103,9 +103,16 @@ void MyThread::readyRead()
             message=data.toStdString().substr(end+2,last-end-2);    //start from index(']')+2 cuz "][" and size of sub str will be index(']')-index-2
 
 
-            global::users[recipent]->addMessage(this->user->getID(),message);//pends the message to the recipent's user class. and also tells
-        }                                                                    //that class the username of who the sender is i.e. the username
-                                                                             //of the person to whom this thread belongs to
+            //adds a new message to both users lists. Also lets them know who the sender is and who will recieve, and that this is not an old message
+            global::users[recipent]->addMessage(this->user->getID(),"me",message,false);
+            this->user->addMessage("me",recipent,message,false);
+
+            Database::sqlQuerry( "insert into message values(\'"+this->user->getID()+"\', \'"+recipent +"\', \'"+message+"\');");
+
+
+
+        }
+
     }
 
 
@@ -117,9 +124,9 @@ void MyThread::readyRead()
 
 
 
-    else if(user!=nullptr&&command=="initdata")
+    else if(user!=nullptr&&command=="initdata")//sends initial infos(old messages,friend list etc) to client
     {
-
+        user->initData(socket);
     }
 
 
@@ -142,7 +149,7 @@ void MyThread::disconnected()
 void MyThread::write(QByteArray str) //sends the user data (str)
 {
     socket->write(str);
-    socket->waitForBytesWritten(1000);
+    socket->flush();
 }
 
 

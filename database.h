@@ -16,16 +16,23 @@ class Database : public QObject
     Q_OBJECT
 public:
     explicit Database(QObject *parent = nullptr);
+    static void initialize();
+    static void sqlQuerry(string q);
 
+private:
     static void loadUsers();                             //loads all users from database to the users map
+    static void loadMessages();
+    static void loadFriends();
+
     static void printUsers();                           //prints all user names
+
 
 signals:
 
 public slots:
 
 
-private:
+
 
 };
 

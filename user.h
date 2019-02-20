@@ -13,13 +13,14 @@ class User : public QObject
     Q_OBJECT
 public:
     explicit User(QObject *parent = nullptr);
-    void addFriend(string id);
-    void addMessage(string sender,string message);      //adda a message to pending which will later get sent
+    void addFriend(string id, bool old=false);      //adds a friend to friends list. If old=0 i.e. new friend adds to pendingFriends and sends
+    void addMessage(string sender,string receiver,string message,bool old=false); //adds a message to message list. If old=0 i.e. new message adds to pendingMessages and sends
     bool isValid();                                     //shows wheather a user is logged in or not
     bool isFriend(string fid);
     bool login(string password);                        //checks and logs in an user
     void setLoginDetails(string id, string password);   //sets username and password to check
     void update(QTcpSocket *socket);                    //updates pending stuff (messages, friends etc)
+    void initData(QTcpSocket *socket);                  //sends old message/friend list etc to client
     string getID();                                     //returns user id
     void logOut();
 
