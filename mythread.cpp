@@ -79,6 +79,45 @@ void MyThread::readyRead()
 
     }
 
+    if(command=="signup--" && user==nullptr)
+    {
+        string user;
+        string pass;
+        bool signupFlag=false;
+
+        size_t start=data.toStdString().find_first_of('['); //signup--[user][pass]
+                                                           //         ^
+
+        size_t end=data.toStdString().find_first_of(']');//signup--[user][pass]
+                                                        //              ^
+
+        size_t last=data.toStdString().find_last_of(']');//signup--[user][pass]
+                                                         //                   ^
+
+        //gets username and password from the string whose format is signup--[username][password]
+        if(start!=string::npos&&end!=string::npos&&last!=string::npos) //if any index was not found format was incorrect.
+        {
+            user=data.toStdString().substr(start+1,end-start-1);  // start from index('[')+1 and size of sub str will index('[')-index-1
+            pass=data.toStdString().substr(end+2,last-end-2);     // start from index(']')+2 cuz "][" and size of sub str will be index(']')-index-2
+
+            if(global::users.find(user)==global::users.end())     //checks if username exists
+            {
+                if(user!="me" && user.size()>0 && pass.size()>0)
+                {
+                    Database::sqlQuerry("insert into login values(\'"+user+"\' , \'"+pass+"\');");
+                    User *nuser=new User;
+                    nuser->setLoginDetails(user,pass);
+                    global::users[user]=nuser;
+                    signupFlag=true;
+                }
+            }
+
+        }
+
+        signupFlag?write("signupT-"):write("signupF-"); //tells the client wheather signup is true or false
+
+    }
+
 
     //NOTE if user==nullptr it means no one is logged in. so next commands wont be accepted.
     else if(user!=nullptr&&command=="message-") //handles incoming messages if the first 8 char code is message-
