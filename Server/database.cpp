@@ -15,7 +15,7 @@ void Database::initialize()
 void Database::loadUsers()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //database witth SQLITE driver
-    db.setDatabaseName("F:/ServerFiles/accounts.db");        //path to the .db file that will hold all informations
+    db.setDatabaseName("G:/Git_projects/accounts.db");        //path to the .db file that will hold all informations
     if(!db.open())qDebug()<<"Failed to connect to database!";//opens the database
     QSqlQuery query;
     string command="select * from login";                   //querry
@@ -33,7 +33,7 @@ void Database::loadUsers()
 void Database::loadFriends()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //database witth SQLITE driver
-    db.setDatabaseName("F:/ServerFiles/accounts.db");        //path to the .db file that will hold all informations
+    db.setDatabaseName("G:/Git_projects/accounts.db");        //path to the .db file that will hold all informations
     if(!db.open())qDebug()<<"Failed to connect to database!";//opens the database
     QSqlQuery query;
     string command="select * from friendlist";                   //querry
@@ -51,7 +51,7 @@ void Database::loadFriends()
 void Database::loadMessages()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //database witth SQLITE driver
-    db.setDatabaseName("F:/ServerFiles/accounts.db");        //path to the .db file that will hold all informations
+    db.setDatabaseName("G:/Git_projects/accounts.db");        //path to the .db file that will hold all informations
     if(!db.open())qDebug()<<"Failed to connect to database!";//opens the database
     QSqlQuery query;
     string command="select * from message";                   //querry
@@ -75,7 +75,7 @@ void Database::loadMessages()
 void Database::sqlQuerry(string q)
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //database witth SQLITE driver
-    db.setDatabaseName("F:/ServerFiles/accounts.db");        //path to the .db file that will hold all informations
+    db.setDatabaseName("G:/Git_projects/accounts.db");        //path to the .db file that will hold all informations
     if(!db.open())qDebug()<<"Failed to connect to database!";//opens the database
     QSqlQuery query;
     query.exec(q.c_str());

@@ -22,6 +22,9 @@ public:
     void update(QTcpSocket *socket);                    //updates pending stuff (messages, friends etc)
     void initData(QTcpSocket *socket);                  //sends old message/friend list etc to client
     string getID();                                     //returns user id
+    string getFolderPath();
+    void setUploadStatus(bool stat);
+    bool getUploadStatus();
     void logOut();
 
 signals:
@@ -32,6 +35,8 @@ public slots:
 private:
     string username;
     string password;
+    string folder;                      //Personal repository path for every user where uploaded files will be saved;
+    bool uploadstat;                     //currently uploading;
     bool validity;                      //wheather a user is logged in or not.
     list<string> messages;              //All messages
     queue<string> pendingMessages;      //new not yet sent messages

@@ -1,4 +1,5 @@
 #include "mythread.h"
+#include "filereceiver.h"
 #include<iostream>
 
 //constructor
@@ -34,6 +35,7 @@ void MyThread::readyRead()
 {
     QByteArray  data = socket->readAll();
     string command;
+    FileReceiver file;
 
     //the first 8 chars of the incomming data from client represents the request command. The for loop extracts that.
     command=data.toStdString().substr(0,8); //login---[user][pass]
@@ -69,6 +71,7 @@ void MyThread::readyRead()
                 {
                     this->user=global::users[user];
                     connect(this->user,SIGNAL(needUpdate()),this,SLOT(updateUser())); //if this->user recieved anything updateUser() will be called
+                    this->user->setUploadStatus(false);
                     loginFlag=true;
                 }
             }
@@ -166,6 +169,37 @@ void MyThread::readyRead()
     else if(user!=nullptr&&command=="initdata")//sends initial infos(old messages,friend list etc) to client
     {
         user->initData(socket);
+    }
+
+    //File receiving from User; format = "download[filename][filesize][receiver]"
+    else if(user!=nullptr&&command=="download"&&user->getUploadStatus()==false)
+    {
+        user->setUploadStatus(true);
+        size_t fnamestart=data.toStdString().find_first_of('[');     //download[filename][filesize][receiver]
+                                                                     //        ^
+        size_t fnameend=data.toStdString().find_first_of(']');       //download[filename][filesize][receiver]
+                                                                     //    ^
+        std::string filename=data.toStdString().substr(fnamestart+1,fnameend-fnamestart-1);
+        std::string filesize=data.toStdString().substr(fnameend+2,10);
+
+        file.setFilePath(filename,user->getFolderPath(), std::stoi(filesize));           //set user folder path for storing file;
+
+    }
+    else if(user!=nullptr&&command=="file----"&&user->getUploadStatus()==true)
+    {
+        QByteArray filedata=data;
+        filedata.remove(0,8);
+        file.fileWrite(filedata);
+    }
+    else if(user!=nullptr&&command=="endofile"&&user->getUploadStatus()==true)
+    {
+        if(file.checkHealthCloseFile())
+        {
+            socket->write("file upload successfull\n");
+            qDebug() <<"file uploaded";
+        }
+        else {socket->write("uploadfail\n");qDebug() <<"file not uploaded";}
+        user->setUploadStatus(false);
     }
 
 
