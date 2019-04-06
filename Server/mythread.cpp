@@ -183,6 +183,8 @@ void MyThread::readyRead()
         std::string filesize=data.toStdString().substr(fnameend+2,10);
 
         file.setFilePath(filename,user->getFolderPath(), std::stoi(filesize));           //set user folder path for storing file;
+        socket->write("download started");
+        socket->flush();
 
     }
     else if(user!=nullptr&&command=="file----"&&user->getUploadStatus()==true)
@@ -190,15 +192,22 @@ void MyThread::readyRead()
         QByteArray filedata=data;
         filedata.remove(0,8);
         file.fileWrite(filedata);
+        socket->write("file is downloading");
+        socket->flush();
     }
     else if(user!=nullptr&&command=="endofile"&&user->getUploadStatus()==true)
     {
         if(file.checkHealthCloseFile())
         {
             socket->write("file upload successfull\n");
+            socket->flush();
             qDebug() <<"file uploaded";
         }
-        else {socket->write("uploadfail\n");qDebug() <<"file not uploaded";}
+        else {
+            socket->write("uploadfail\n");
+            socket->flush();
+            qDebug() <<"file not uploaded";
+        }
         user->setUploadStatus(false);
     }
 
