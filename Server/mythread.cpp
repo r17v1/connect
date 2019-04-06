@@ -34,6 +34,7 @@ void MyThread::run()
 void MyThread::readyRead()
 {
     QByteArray  data = socket->readAll();
+    qDebug() << data.size();
     string command;
     FileReceiver file;
 
@@ -46,6 +47,12 @@ void MyThread::readyRead()
     //if user !=nullptr it means that the user is already logged in
     if(command=="login---" && user==nullptr)
     {
+        QString cmd(data), usr;
+        int i=cmd.indexOf('[')+1;
+        int k=cmd.indexOf(']');
+        usr=cmd.mid(i,k-i);
+        qDebug() << usr;
+
         string user;
         string pass;
         bool loginFlag=false;
@@ -72,6 +79,7 @@ void MyThread::readyRead()
                     this->user=global::users[user];
                     connect(this->user,SIGNAL(needUpdate()),this,SLOT(updateUser())); //if this->user recieved anything updateUser() will be called
                     this->user->setUploadStatus(false);
+                    this->user->setFolderPath(usr);
                     loginFlag=true;
                 }
             }
@@ -84,6 +92,12 @@ void MyThread::readyRead()
 
     if(command=="signup--" && user==nullptr)
     {
+        QString cmd(data), usr;
+        int i=cmd.indexOf('[')+1;
+        int k=cmd.indexOf(']');
+        usr=cmd.mid(i,k-i);
+        qDebug() << usr;
+
         string user;
         string pass;
         bool signupFlag=false;
@@ -110,6 +124,7 @@ void MyThread::readyRead()
                     Database::sqlQuerry("insert into login values(\'"+user+"\' , \'"+pass+"\');");
                     User *nuser=new User;
                     nuser->setLoginDetails(user,pass);
+                    nuser->setFolderPath(usr);
                     global::users[user]=nuser;
                     signupFlag=true;
                 }
@@ -177,21 +192,28 @@ void MyThread::readyRead()
     else if(user!=nullptr&&command=="download"&&user->getUploadStatus()==false)
     {
         user->setUploadStatus(true);
-        size_t fnamestart=data.toStdString().find_first_of('[');     //download[filename][filesize][receiver]
-                                                                     //        ^
-        size_t fnameend=data.toStdString().find_first_of(']');       //download[filename][filesize][receiver]
-                                                                     //    ^
-        std::string filename=data.toStdString().substr(fnamestart+1,fnameend-fnamestart-1);
-        std::string filesize=data.toStdString().substr(fnameend+2,10);
+        QString cmd(data) , filename, filesize;
+        int i=cmd.indexOf('[')+1;
+        int k=cmd.indexOf(']');
+        filename=cmd.mid(i,k-i);
+        qDebug() << filename;
 
-        file.setFilePath(filename,user->getFolderPath(), std::stoi(filesize));           //set user folder path for storing file;
+        k+=2;
+        i=cmd.indexOf(']',k);
+        filesize = cmd.mid(k,i-k);
+        qDebug() << filesize;
+
+
+        bool ok;
+        file.setFilePath(filename,user->getFolderPath(), filesize.toLongLong(&ok,10));           //set user folder path for storing file;
         socket->write("download started");
         socket->flush();
+
 
     }
     else if(user!=nullptr&&command=="file----"&&user->getUploadStatus()==true)
     {
-        QByteArray filedata=data;
+        QByteArray filedata(data);
         filedata.remove(0,8);
         file.fileWrite(filedata);
         socket->write("file is downloading");
@@ -231,7 +253,7 @@ void MyThread::readyRead()
 //        write("invalid-");
 //    }
 
-    qDebug()<<socketDescriptor<<" Data in: "<< data;
+    //qDebug()<<socketDescriptor<<" Data in: "<< data;
 
 }
 

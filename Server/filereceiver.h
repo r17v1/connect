@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QTcpSocket>
-#include <string>
 #include <QFile>
 
 class FileReceiver : public QObject
@@ -12,12 +11,12 @@ class FileReceiver : public QObject
 public:
     FileReceiver();
     void fileWrite(QByteArray data);
-    void setFilePath(std::string filename, std::string path, qint64 siz);
+    void setFilePath(QString filename, QString path, qint64 siz);
     bool checkHealthCloseFile();  //close file and checks health of the file.
 
 
 private:
-    std::string filepath;
+    QString filepath;
     QFile *file;
     qint64 filesize;
 

@@ -11,10 +11,6 @@ void User::setLoginDetails(string id, string password) //sets the required usern
 {
     username=id;
     this->password=password;
-    QDir dir;
-    folder = "C:/ConnectServer/"+id;
-    if(dir.mkdir(folder.c_str()))                       //Creating users repository for uploaded files;
-        std::cout<<"Cannot create new directory\n";
 }
 void User::update(QTcpSocket *socket)                 //updates messages and friend lists.
 {
@@ -110,9 +106,16 @@ void User::initData(QTcpSocket *socket)
     }
 }
 
-string User::getFolderPath()
+QString User::getFolderPath()
 {
     return folder;
+}
+void User::setFolderPath(QString usr)
+{
+    QDir dir;
+    folder = "C:/ConnectServer/"+usr;
+    if(dir.mkdir(folder)==false)                       //Creating users repository for uploaded files;
+        std::cout<<"Cannot create new directory\n";
 }
 void User::setUploadStatus(bool stat)
 {

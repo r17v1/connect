@@ -4,10 +4,11 @@ FileReceiver::FileReceiver()
 {
 
 }
-void FileReceiver::setFilePath(std::string filename, std::string path, qint64 siz)
+void FileReceiver::setFilePath(QString filename, QString path, qint64 siz)
 {
     filepath=path+"/"+filename;
-    file= new QFile(filepath.c_str());
+    qDebug() << filepath;
+    file= new QFile(filepath);
     file->open(QIODevice::WriteOnly);
     filesize = siz;
     return;
@@ -15,12 +16,13 @@ void FileReceiver::setFilePath(std::string filename, std::string path, qint64 si
 void FileReceiver::fileWrite(QByteArray data)
 {
     file->write(data);
-    file->waitForBytesWritten(10000);
+    file->waitForBytesWritten(-1);
     return;
 }
 
 bool FileReceiver::checkHealthCloseFile()
 {
     file->close();
+    qDebug() << file->size();
     return filesize==file->size();
 }
