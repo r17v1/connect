@@ -23,6 +23,8 @@ void User::update(QTcpSocket *socket)                 //updates messages and fri
         socket->write(pendingFriends.front().c_str());
         socket->flush();
         pendingFriends.pop();
+        socket->waitForReadyRead(-1);
+        socket->readAll();
     }
 
     while(pendingMessages.size())
@@ -31,6 +33,8 @@ void User::update(QTcpSocket *socket)                 //updates messages and fri
         socket->write(pendingMessages.front().c_str());
         socket->flush();
         pendingMessages.pop();
+        socket->waitForReadyRead(-1);
+        socket->readAll();
     }
 }
 
@@ -52,6 +56,7 @@ void User::addMessage(string sender,string receiver, string message,bool old) //
     if (old==false && receiver=="me") //if This user is the receiver and this is a new message only then this message needs to be sent to the client
     {
         pendingMessages.push(format);
+        if(validity)
         emit needUpdate();
     }
 }
@@ -66,6 +71,8 @@ void User::addFriend(string id,bool old)                        //adds a friend 
     if(!old)
     {
         pendingFriends.push(format);
+
+        if(validity)
         emit needUpdate();
     }
 }
@@ -91,11 +98,15 @@ void User::initData(QTcpSocket *socket)
     {
         socket->write(i.c_str());
         socket->flush();
+        socket->waitForReadyRead(-1);
+        socket->readAll();
     }
     for(auto i:friends)
     {
         socket->write(i.c_str());
         socket->flush();
+        socket->waitForReadyRead(-1);
+        socket->readAll();
     }
 }
 

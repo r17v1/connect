@@ -155,6 +155,8 @@ void MyThread::readyRead()
 
         }
 
+        write("ok------");
+
     }
 
 
@@ -210,7 +212,24 @@ void MyThread::readyRead()
         }
         user->setUploadStatus(false);
     }
+    else if (user!=nullptr&&command=="addfrnd-")//adds contact, format addfrnd-[username]
+    {
+        size_t start=data.toStdString().find_first_of('[');
+        size_t end=data.toStdString().find_last_of(']');
+        std::string username=data.toStdString().substr(start+1,end-start-1);
+        user->addFriend(username);
+        global::users[username]->addFriend(user->getID());
+        Database::sqlQuerry("insert into friendlist values (\'"+user->getID()+"\', \'"+username+"\');");
 
+        write("ok------");
+
+
+    }
+
+//    else
+//    {
+//        write("invalid-");
+//    }
 
     qDebug()<<socketDescriptor<<" Data in: "<< data;
 
