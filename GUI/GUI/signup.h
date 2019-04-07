@@ -2,6 +2,7 @@
 #define SIGNUP_H
 
 #include <QDialog>
+#include <QMessageBox>
 
 namespace Ui {
 class SignUp;

@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,11 +28,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    signup.cpp
+    signup.cpp \
+    mysocket.cpp
 
 HEADERS += \
         mainwindow.h \
-    signup.h
+    signup.h \
+    mysocket.h
 
 FORMS += \
         mainwindow.ui \
