@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+//here j is a public variable of the class representing the index of the message we start showing from
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -50,6 +50,7 @@ void MainWindow::on_label_linkActivated(const QString &link)
 void MainWindow::on_pushButton_3_clicked()
 {
     if(j)j-=6;
+    //takes us to prev 6 messages
 
 }
 
@@ -57,4 +58,5 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     j+=6;
+    //takes us to next 6 messages
 }
