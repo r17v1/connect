@@ -23,7 +23,8 @@ SOURCES += \
     database.cpp \
     global.cpp \
     user.cpp \
-    filereceiver.cpp
+    filereceiver.cpp \
+    group.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -36,6 +37,7 @@ HEADERS += \
     database.h \
     global.h \
     user.h \
-    filereceiver.h
+    filereceiver.h \
+    group.h
 
 DISTFILES +=

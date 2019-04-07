@@ -2,6 +2,8 @@
 #define SIGNUP_H
 
 #include <QDialog>
+#include <QMessageBox>
+#include "mysocket.h"
 
 namespace Ui {
 class SignUp;
@@ -14,6 +16,7 @@ class SignUp : public QDialog
 public:
     explicit SignUp(QWidget *parent = nullptr);
     ~SignUp();
+    void setSocket(MySocket * soc);
 
 private slots:
 
@@ -21,6 +24,7 @@ private slots:
 
 private:
     Ui::SignUp *ui;
+    MySocket *socket;
 };
 
 #endif // SIGNUP_H

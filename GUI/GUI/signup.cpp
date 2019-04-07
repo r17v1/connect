@@ -12,8 +12,10 @@ SignUp::~SignUp()
 {
     delete ui;
 }
-
-
+void SignUp::setSocket(MySocket *soc)
+{
+    socket=soc;
+}
 
 void SignUp::on_pushButton_submit_clicked()
 {
@@ -22,4 +24,27 @@ void SignUp::on_pushButton_submit_clicked()
     QString username=ui->lineEdit_username->text();
     QString email=ui->lineEdit_email->text();
     QString password=ui->lineEdit_password->text();
+    QString retype_pass=ui->lineEdit_retype_pass->text();
+
+    if(password != retype_pass)
+    {
+        QMessageBox::warning(this,"Caution", "Password didn't Matched");
+        ui->lineEdit_retype_pass->setText(nullptr);
+    }
+    else {
+
+        QByteArray data;
+        data.append("signup--["+username+"]["+password+']');
+        socket->socketWrite(data);
+        QString cmd(socket->socketRead());
+        if(cmd=="signupT-")
+        {
+            QMessageBox::information(this,"Congratulation","Signup Successfull");
+            accept();
+        }
+        else {
+            QMessageBox::warning(this,"Caution","Signup is not possible");
+        }
+    }
+
 }

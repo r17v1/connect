@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    socket = new MySocket;
 }
 
 MainWindow::~MainWindow()
@@ -17,10 +18,15 @@ void MainWindow::on_pushButton_SignIn_clicked()
 {
     QString username = ui->lineEdit_username->text();
     QString password = ui->lineEdit_password->text();
-    if(username=="system" && password=="test123")
+    QString cmd = "login---["+username+"]["+password+"]";
+    QByteArray data;
+    data.append(cmd);
+    socket->socketWrite(data);
+    cmd=QString(socket->socketRead());
+
+    if(cmd=="loginT--")
     {
         QMessageBox::information(this,"SignIn", "Sign In Successful!");
-
     }
     else
     {
@@ -32,5 +38,21 @@ void MainWindow::on_pushButton_SignUp_clicked()
 {
     hide();
     signUp = new SignUp(this);
-    signUp->show();
+    signUp->setSocket(socket);
+    signUp->exec();
+    show();
+}
+
+void MainWindow::on_connet_but_clicked()
+{
+    if(socket->doConnect()==false)
+    {
+        QMessageBox::warning(this,"Caution","Couldn't connect to the server");
+    }
+    else {
+        QMessageBox::information(this, "Congratulation", "You are now connected");
+        ui->conncetion_status->setChecked(true);
+    }
+
+
 }
