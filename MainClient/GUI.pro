@@ -31,20 +31,23 @@ SOURCES += \
     signup.cpp \
     mysocket.cpp \
     friendwindow.cpp \
-    chatbox.cpp
+    chatbox.cpp \
+    fileexplorar.cpp
 
 HEADERS += \
         mainwindow.h \
     signup.h \
     mysocket.h \
     friendwindow.h \
-    chatbox.h
+    chatbox.h \
+    fileexplorar.h
 
 FORMS += \
         mainwindow.ui \
     signup.ui \
     friendwindow.ui \
-    chatbox.ui
+    chatbox.ui \
+    fileexplorar.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

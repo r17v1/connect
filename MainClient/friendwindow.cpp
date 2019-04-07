@@ -50,15 +50,10 @@ void FriendWindow::setLabels()
 void FriendWindow::on_pushButton_clicked()
 {
     ChatBox *c=new ChatBox(this);
-
+    this->hide();
     c->show();
+    this->show();
 }
-
-
-
-
-
-
 
 void FriendWindow::on_groupBox_objectNameChanged(const QString &objectName)
 {
@@ -84,27 +79,31 @@ void FriendWindow::on_pushButton_7_clicked()
 void FriendWindow::on_pushButton_2_clicked()
 {
     ChatBox *c=new ChatBox(this);
-
+    this->hide();
     c->show();
+    this->show();
 }
 
 void FriendWindow::on_pushButton_3_clicked()
 {
     ChatBox *c=new ChatBox(this);
-
+    this->hide();
     c->show();
+    this->show();
 }
 
 void FriendWindow::on_pushButton_4_clicked()
 {
     ChatBox *c=new ChatBox(this);
-
+    this->hide();
     c->show();
+    this->show();
 }
 
 void FriendWindow::on_pushButton_5_clicked()
 {
     ChatBox *c=new ChatBox(this);
-
+    this->hide();
     c->show();
+    this->show();
 }

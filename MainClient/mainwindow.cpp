@@ -1,12 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    socket = new MySocket;
+    exsocket = new MySocket;
 }
 
 MainWindow::~MainWindow()
@@ -21,8 +22,8 @@ void MainWindow::on_pushButton_SignIn_clicked()
     QString cmd = "login---["+username+"]["+password+"]";
     QByteArray data;
     data.append(cmd);
-    socket->socketWrite(data);
-    cmd=QString(socket->socketRead());
+    exsocket->socketWrite(data);
+    cmd=QString(exsocket->socketRead());
 
     if(cmd=="loginT--")
     {
@@ -42,14 +43,14 @@ void MainWindow::on_pushButton_SignUp_clicked()
 {
     hide();
     signUp = new SignUp(this);
-    signUp->setSocket(socket);
+    signUp->setSocket(exsocket);
     signUp->exec();
     show();
 }
 
 void MainWindow::on_connet_but_clicked()
 {
-    if(socket->doConnect()==false)
+    if(exsocket->doConnect()==false)
     {
         QMessageBox::warning(this,"Caution","Couldn't connect to the server");
     }
@@ -57,6 +58,4 @@ void MainWindow::on_connet_but_clicked()
         QMessageBox::information(this, "Congratulation", "You are now connected");
         ui->conncetion_status->setChecked(true);
     }
-
-
 }

@@ -19,4 +19,5 @@ private:
     QTcpSocket *socket;
 };
 
+
 #endif // MYSOCKET_H

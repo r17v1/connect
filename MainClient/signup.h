@@ -16,7 +16,7 @@ class SignUp : public QDialog
 public:
     explicit SignUp(QWidget *parent = nullptr);
     ~SignUp();
-    void setSocket(MySocket * soc);
+    void setSocket(MySocket *soc);
 
 private slots:
 

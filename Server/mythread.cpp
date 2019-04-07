@@ -34,7 +34,6 @@ void MyThread::run()
 void MyThread::readyRead()
 {
     QByteArray  data = socket->readAll();
-    qDebug() << data.size();
     string command;
     FileReceiver file;
 
@@ -223,12 +222,12 @@ void MyThread::readyRead()
     {
         if(file.checkHealthCloseFile())
         {
-            socket->write("file upload successfull\n");
+            socket->write("uploaded");
             socket->flush();
             qDebug() <<"file uploaded";
         }
         else {
-            socket->write("uploadfail\n");
+            socket->write("uploadff");
             socket->flush();
             qDebug() <<"file not uploaded";
         }
@@ -253,7 +252,7 @@ void MyThread::readyRead()
 //        write("invalid-");
 //    }
 
-    //qDebug()<<socketDescriptor<<" Data in: "<< data;
+   // qDebug()<<socketDescriptor<<" Data in: "<< data;
 
 }
 

@@ -2,6 +2,7 @@
 #define CHATBOX_H
 
 #include <QMainWindow>
+#include "fileexplorar.h"
 
 namespace Ui {
 class ChatBox;
@@ -18,7 +19,6 @@ public:
     ~ChatBox();
 
 private slots:
-    void on_toolButton_triggered(QAction *arg1);
 
     void on_label_linkActivated(const QString &link);
 
@@ -26,8 +26,11 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_file_attach_clicked();
+
 private:
     Ui::ChatBox *ui;
+    FileExplorar *explore;
 };
 
 #endif // MAINWINDOW_H

@@ -35,10 +35,6 @@ ChatBox::~ChatBox()
     delete ui;
 }
 
-void ChatBox::on_toolButton_triggered(QAction *arg1)
-{
-    //file_path_will_open
-}
 
 void ChatBox::on_label_linkActivated(const QString &link)
 {
@@ -57,4 +53,10 @@ void ChatBox::on_pushButton_3_clicked()
 void ChatBox::on_pushButton_2_clicked()
 {
     j+=6;
+}
+
+void ChatBox::on_file_attach_clicked()
+{
+    explore = new FileExplorar(this);
+    explore->exec();
 }

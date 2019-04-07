@@ -1,5 +1,7 @@
 #include "mysocket.h"
 
+extern MySocket *exsocket;
+
 MySocket::MySocket()
 {
     socket = new QTcpSocket;
