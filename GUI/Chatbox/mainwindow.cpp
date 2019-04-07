@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //here j is the index of the username in the database aka rownum
     QString chatbox[10]={"A:: Hi","B:: Hello","C:: TATA","D:: BYe BYe","E:: MEH","Hi2","Hello2","TATA2","BYe BYe2","MEH2"};
     ui->setupUi(this);
     QString user="Logged in As   ",name="Hirok",username;
