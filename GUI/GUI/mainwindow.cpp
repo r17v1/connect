@@ -38,16 +38,21 @@ void MainWindow::on_pushButton_SignUp_clicked()
 {
     hide();
     signUp = new SignUp(this);
+    signUp->setSocket(socket);
     signUp->exec();
     show();
 }
 
 void MainWindow::on_connet_but_clicked()
 {
-    while(socket->doConnect()==false)
+    if(socket->doConnect()==false)
     {
         QMessageBox::warning(this,"Caution","Couldn't connect to the server");
     }
-    QMessageBox::information(this, "Congratulation", "You are now connected");
-    ui->conncetion_status->setChecked(true);
+    else {
+        QMessageBox::information(this, "Congratulation", "You are now connected");
+        ui->conncetion_status->setChecked(true);
+    }
+
+
 }

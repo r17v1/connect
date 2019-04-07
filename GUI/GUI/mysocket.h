@@ -2,7 +2,6 @@
 #define MYSOCKET_H
 
 #include <QObject>
-#include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
 #include <QMessageBox>
 
