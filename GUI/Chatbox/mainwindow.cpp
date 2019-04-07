@@ -41,11 +41,11 @@ void MainWindow::on_groupBox_objectNameChanged(const QString &objectName)
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    j+=5;
+    j+=5;//takes to the next 5 user
 
 }
 
 void MainWindow::on_pushButton_7_clicked()
 {
-    if(j>0)j-=5;
+    if(j>0)j-=5;//takes to the prev 5 userss
 }
