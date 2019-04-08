@@ -67,8 +67,6 @@ void User::addFriend(string id,bool old)                        //adds a friend 
     if(!old)
     {
         pendingFriends.push(format);
-
-        if(validity)
         emit needUpdate();
     }
 }

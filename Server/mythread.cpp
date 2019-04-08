@@ -252,7 +252,7 @@ void MyThread::readyRead()
 //        write("invalid-");
 //    }
 
-   // qDebug()<<socketDescriptor<<" Data in: "<< data;
+    qDebug()<<socketDescriptor<<" Data in: "<< data;
 
 }
 
