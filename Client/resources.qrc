@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-      <file>resources/conn.png</file>
-	  <file>resources/conn_connected.png</file>
-	  <file>resources/conn_disConnected.png</file>
-	  <file>resources/conn_makeConnect.png</file>
-    </qresource>
-</RCC>
