@@ -8,8 +8,6 @@ ChatBox::ChatBox(QWidget *parent) :
     ui->setupUi(this);
     ui->groupBox->setTitle("Chat!");
 
-    if(j==0)ui->pushButton_3->setText("Welcome");
-
 }
 
 ChatBox::~ChatBox()
