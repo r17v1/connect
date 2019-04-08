@@ -1,0 +1,12 @@
+debug/main.o
+debug/mainwindow.o
+debug/signup.o
+debug/mysocket.o
+debug/friendwindow.o
+debug/chatbox.o
+debug/fileexplorar.o
+debug/moc_mainwindow.o
+debug/moc_signup.o
+debug/moc_friendwindow.o
+debug/moc_chatbox.o
+debug/moc_fileexplorar.o

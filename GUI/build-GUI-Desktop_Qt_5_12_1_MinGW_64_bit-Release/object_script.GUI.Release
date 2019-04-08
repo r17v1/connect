@@ -1,0 +1,12 @@
+release/main.o
+release/mainwindow.o
+release/signup.o
+release/mysocket.o
+release/friendwindow.o
+release/chatbox.o
+release/fileexplorar.o
+release/moc_mainwindow.o
+release/moc_signup.o
+release/moc_friendwindow.o
+release/moc_chatbox.o
+release/moc_fileexplorar.o

@@ -5,9 +5,9 @@ FriendWindow::FriendWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::FriendWindow)
 {
-    addFriend("a");
-    addFriend("b");
-    addFriend("c");
+    addFriend("r17v1");
+    addFriend("herok");
+    addFriend("rizvi");
     addFriend("d");
     addFriend("e");
     addFriend("f");
@@ -16,11 +16,11 @@ FriendWindow::FriendWindow(QWidget *parent) :
     username=user+name;
     ui->groupBox->setTitle(username);
     for(int i=j;i<j+5;i++){
-        if(j-i==0)ui->pushButton->setText(friends[i]);
-        else if(j-i==1)ui->pushButton_2->setText(friends[i]);
-        else if(j-i==2)ui->pushButton_3->setText(friends[i]);
-        else if(j-i==3)ui->pushButton_4->setText(friends[i]);
-        else if(j-i==4)ui->pushButton_5->setText(friends[i]);
+        if(i-j==0)ui->pushButton->setText(friends[i]);
+        else if(i-j==1)ui->pushButton_2->setText(friends[i]);
+        else if(i-j==2)ui->pushButton_3->setText(friends[i]);
+        else if(i-j==3)ui->pushButton_4->setText(friends[i]);
+        else if(i-j==4)ui->pushButton_5->setText(friends[i]);
     }
     ui->pushButton_6->setText("Next");
     if(j==0)ui->pushButton_7->setText("Welcome");
@@ -36,11 +36,11 @@ void FriendWindow::setLabels()
     for(int i=j;i<j+5;i++){
         if(i<friends.size())
         {
-            if(j-i==0)ui->pushButton->setText(friends[i]);
-            if(j-i==1)ui->pushButton_2->setText(friends[i]);
-            if(j-i==2)ui->pushButton_3->setText(friends[i]);
-            if(j-i==3)ui->pushButton_4->setText(friends[i]);
-            if(j-i==4)ui->pushButton_5->setText(friends[i]);
+            if(i-j==0)ui->pushButton->setText(friends[i]);
+            if(i-j==1)ui->pushButton_2->setText(friends[i]);
+            if(i-j==2)ui->pushButton_3->setText(friends[i]);
+            if(i-j==3)ui->pushButton_4->setText(friends[i]);
+            if(i-j==4)ui->pushButton_5->setText(friends[i]);
         }
     }
     if(j==0)ui->pushButton_7->setText("Welcome");
