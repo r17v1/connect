@@ -51,6 +51,7 @@ void FriendWindow::on_pushButton_clicked()
 {
     ChatBox *c=new ChatBox(this);
     this->hide();
+    c->setReceiver(ui->pushButton->text());
     c->show();
     this->show();
 }
@@ -79,6 +80,7 @@ void FriendWindow::on_pushButton_7_clicked()
 void FriendWindow::on_pushButton_2_clicked()
 {
     ChatBox *c=new ChatBox(this);
+    c->setReceiver(ui->pushButton_2->text());
     this->hide();
     c->show();
     this->show();
@@ -87,6 +89,7 @@ void FriendWindow::on_pushButton_2_clicked()
 void FriendWindow::on_pushButton_3_clicked()
 {
     ChatBox *c=new ChatBox(this);
+    c->setReceiver(ui->pushButton_3->text());
     this->hide();
     c->show();
     this->show();
@@ -95,6 +98,7 @@ void FriendWindow::on_pushButton_3_clicked()
 void FriendWindow::on_pushButton_4_clicked()
 {
     ChatBox *c=new ChatBox(this);
+    c->setReceiver(ui->pushButton_4->text());
     this->hide();
     c->show();
     this->show();
@@ -103,6 +107,7 @@ void FriendWindow::on_pushButton_4_clicked()
 void FriendWindow::on_pushButton_5_clicked()
 {
     ChatBox *c=new ChatBox(this);
+    c->setReceiver(ui->pushButton_5->text());
     this->hide();
     c->show();
     this->show();

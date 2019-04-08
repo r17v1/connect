@@ -6,40 +6,15 @@ ChatBox::ChatBox(QWidget *parent) :
     ui(new Ui::ChatBox)
 {
     ui->setupUi(this);
-    QString user="Chatting With   ",name="Hirok",username;
-    username=user+name;
-    ui->groupBox->setTitle(username);
-    for(int i=j;i<j+6;i++){
-     QString text;
-     //just assuming i%2 it will be replaced by a flag
-     if(i%2==0)text=name+" :: "+message[i];
-     else text="You :: "+message[i];
-       if(i==j)
-    ui->label->setText(text);
-       else if(i==j+1)
-    ui->label_2->setText(text);
-       else if(i==j+2)
-    ui->label_3->setText(text);
-       else if(i==j+3)
-    ui->label_4->setText(text);
-       else if(i==j+4)
-    ui->label_5->setText(text);
-       else if(i==j+5)
-    ui->label_6->setText(text);}
+    ui->groupBox->setTitle("Chat!");
+
     if(j==0)ui->pushButton_3->setText("Welcome");
-        else ui->pushButton_3->setText("Previous");
+
 }
 
 ChatBox::~ChatBox()
 {
     delete ui;
-}
-
-
-void ChatBox::on_label_linkActivated(const QString &link)
-{
-    ui->label->setText(message[j+0]);
-    ui->label_2->setText(message[j+1]);
 }
 
 
@@ -59,4 +34,24 @@ void ChatBox::on_file_attach_clicked()
 {
     explore = new FileExplorar(this);
     explore->exec();
+}
+
+void ChatBox::on_pushButton_clicked()
+{
+
+    ui->textBrowser->append("me : "+ui->lineEdit->text()+"\n");
+
+    QString cmd = ui->lineEdit->text();
+
+
+    cmd = "message-["+id+"]["+cmd+"]";
+    QByteArray data;
+    data.append(cmd);
+    exsocket->socketWrite(data);
+    ui->lineEdit->setText(nullptr);
+}
+
+void ChatBox::setReceiver(QString nm)
+{
+    id=nm;
 }

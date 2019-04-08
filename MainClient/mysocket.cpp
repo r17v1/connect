@@ -13,7 +13,7 @@ MySocket::~MySocket()
 }
 bool MySocket::doConnect()
 {
-    socket->connectToHost("localhost",1234);
+    socket->connectToHost("10.220.155.218",1234);
     if(socket->waitForConnected(10000))
         return true;
     else  return false;

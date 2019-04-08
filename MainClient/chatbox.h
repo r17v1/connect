@@ -17,10 +17,9 @@ public:
     QString message[10]={"Hi","Hello","TATA","BYe BYe","MEH","Yah","Hello2","TATA2","BYe BYe2","MEH2"};
     explicit ChatBox(QWidget *parent = nullptr);
     ~ChatBox();
+    void setReceiver(QString nm);
 
 private slots:
-
-    void on_label_linkActivated(const QString &link);
 
     void on_pushButton_3_clicked();
 
@@ -28,9 +27,12 @@ private slots:
 
     void on_file_attach_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::ChatBox *ui;
     FileExplorar *explore;
+    QString id;
 };
 
 #endif // MAINWINDOW_H

@@ -63,7 +63,7 @@ void FileExplorar::on_send_button_clicked()
         while (!file->atEnd()) {
 
             QByteArray data =  "file----";
-            data.append(file->read(50000));
+            data.append(file->read(1000));
             exsocket->socketWrite(data);
             exsocket->socketRead();
             cur+=data.size()-8;
