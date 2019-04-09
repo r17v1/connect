@@ -75,7 +75,7 @@ void ChatBox::on_file_attach_clicked()
 void ChatBox::on_pushButton_clicked()
 {
 
-    ui->textBrowser->append("ME: "+ui->lineEdit->text()+"\n");
+
 
     QString cmd = ui->lineEdit->text();
 

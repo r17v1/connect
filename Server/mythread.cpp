@@ -238,11 +238,20 @@ void MyThread::readyRead()
         size_t start=data.toStdString().find_first_of('[');
         size_t end=data.toStdString().find_last_of(']');
         std::string username=data.toStdString().substr(start+1,end-start-1);
-        user->addFriend(username);
-        global::users[username]->addFriend(user->getID());
-        Database::sqlQuerry("insert into friendlist values (\'"+user->getID()+"\', \'"+username+"\');");
 
-        write("ok------");
+        if(global::users.find(username)!=global::users.end())
+        {
+            if(this->user->isFriend(username)==false)
+            {
+                user->addFriend(username);
+                global::users[username]->addFriend(user->getID());
+                Database::sqlQuerry("insert into friendlist values (\'"+user->getID()+"\', \'"+username+"\');");
+
+                write("addfrndT");
+            }
+            else write("addfrndF");
+        }
+        else write("addfrndF");
 
 
     }

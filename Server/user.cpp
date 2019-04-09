@@ -43,13 +43,20 @@ bool User::login(string password)                     //allows log in if passwor
     return validity;
 }
 
+bool User::isFriend(std::string fid)
+{
+    string format="friend--";
+    format+= '['+fid+']';
+    return find(friends.begin(),friends.end(),format)!=friends.end();
+}
+
 void User::addMessage(string sender,string receiver, string message,bool old) //adds a message to the message que. After automation this might no longer be required
 {
     string format ="message-["+sender+"]["+receiver+"]["+message+"]";
 
      //std::cout<<format<<std::endl;
     messages.push_back(format);
-    if (old==false && receiver=="me") //if This user is the receiver and this is a new message only then this message needs to be sent to the client
+    if (old==false) //if this is a new message only then this message needs to be sent to the client
     {
         pendingMessages.push(format);
         if(validity)
