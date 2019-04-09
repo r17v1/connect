@@ -19,8 +19,8 @@ void User::update(QTcpSocket *socket)                 //updates messages and fri
         socket->write(pendingFriends.front().c_str());
         socket->flush();
         pendingFriends.pop();
-        socket->waitForReadyRead(-1);
-        socket->readAll();
+        socket->waitForReadyRead(1000);
+       // socket->readAll();
     }
 
     while(pendingMessages.size())
@@ -29,8 +29,8 @@ void User::update(QTcpSocket *socket)                 //updates messages and fri
         socket->write(pendingMessages.front().c_str());
         socket->flush();
         pendingMessages.pop();
-        socket->waitForReadyRead(-1);
-        socket->readAll();
+        socket->waitForReadyRead(1000);
+        //socket->readAll();
     }
 }
 
@@ -59,7 +59,6 @@ void User::addMessage(string sender,string receiver, string message,bool old) //
     if (old==false) //if this is a new message only then this message needs to be sent to the client
     {
         pendingMessages.push(format);
-        if(validity)
         emit needUpdate();
     }
 }
