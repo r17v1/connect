@@ -54,6 +54,7 @@ void MainWindow::onlogin(bool t)
         this->hide();
         frnd=new FriendWindow(this);
         frnd->show();
+        frnd->setUsername(ui->lineEdit_username->text());
 
         //exsocket->socketWrite("initdata");
     }

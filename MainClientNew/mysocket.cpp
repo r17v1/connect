@@ -20,7 +20,7 @@ void MySocket::wrr(int i)
 
 bool MySocket::doConnect()
 {
-    socket->connectToHost("localhost",1234);
+    socket->connectToHost("192.168.1.101",1234);
     if(socket->waitForConnected(10000))
         return true;
     else  return false;

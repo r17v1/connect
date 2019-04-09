@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>627</width>
-    <height>386</height>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,7 +85,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_7">
+        <widget class="QPushButton" name="pushButton_6">
          <property name="styleSheet">
           <string notr="true">background-color : rgb(255, 56, 21)</string>
          </property>
@@ -95,7 +95,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_6">
+        <widget class="QPushButton" name="pushButton_7">
          <property name="styleSheet">
           <string notr="true">background-color : rgb(255, 56, 21)</string>
          </property>

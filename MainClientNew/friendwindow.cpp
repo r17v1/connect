@@ -10,15 +10,18 @@ FriendWindow::FriendWindow(QWidget *parent) :
    connect(exsocket,SIGNAL(newMsg(QString)),this,SLOT(onNewChat(QString)));
 
     ui->setupUi(this);
-    QString user="Logged in As   ",name="Hirok",username;
-    username=user+name;
-    ui->groupBox->setTitle(username);
+    ui->groupBox->setTitle("Logged in as "+username);
     setLabels();
     ui->pushButton_6->setText("Next");
     if(j==0)ui->pushButton_7->setText("Welcome");
     else ui->pushButton_7->setText("Previous");
 
     exsocket->socketWrite("initdata");
+}
+
+void FriendWindow::setUsername(QString id)
+{
+    username=id;
 }
 
 void FriendWindow::onNewChat(QString data)
@@ -125,10 +128,10 @@ void FriendWindow::on_pushButton_2_clicked()
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_2->text());
     this->hide();
-    for(int i=0;i<chats[ui->pushButton->text()].size();i++)
+    for(int i=0;i<chats[ui->pushButton_2->text()].size();i++)
     {
-        c->addChat(chats[ui->pushButton->text()][i]);
-         qDebug()<<chats[ui->pushButton->text()][i];
+        c->addChat(chats[ui->pushButton_2->text()][i]);
+        // qDebug()<<chats[ui->pushButton->text()][i];
     }
 
 
@@ -141,10 +144,10 @@ void FriendWindow::on_pushButton_3_clicked()
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_3->text());
     this->hide();
-    for(int i=0;i<chats[ui->pushButton->text()].size();i++)
+    for(int i=0;i<chats[ui->pushButton_3->text()].size();i++)
     {
-        c->addChat(chats[ui->pushButton->text()][i]);
-         qDebug()<<chats[ui->pushButton->text()][i];
+        c->addChat(chats[ui->pushButton_3->text()][i]);
+        // qDebug()<<chats[ui->pushButton_3->text()][i];
     }
 
 
@@ -157,10 +160,10 @@ void FriendWindow::on_pushButton_4_clicked()
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_4->text());
     this->hide();
-    for(int i=0;i<chats[ui->pushButton->text()].size();i++)
+    for(int i=0;i<chats[ui->pushButton_4->text()].size();i++)
     {
-        c->addChat(chats[ui->pushButton->text()][i]);
-         qDebug()<<chats[ui->pushButton->text()][i];
+        c->addChat(chats[ui->pushButton_4->text()][i]);
+         //qDebug()<<chats[ui->pushButton_4->text()][i];
     }
 
 
@@ -173,10 +176,10 @@ void FriendWindow::on_pushButton_5_clicked()
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_5->text());
     this->hide();
-    for(int i=0;i<chats[ui->pushButton->text()].size();i++)
+    for(int i=0;i<chats[ui->pushButton_5->text()].size();i++)
     {
-        c->addChat(chats[ui->pushButton->text()][i]);
-         qDebug()<<chats[ui->pushButton->text()][i];
+        c->addChat(chats[ui->pushButton_5->text()][i]);
+         //qDebug()<<chats[ui->pushButton_5->text()][i];
     }
 
 

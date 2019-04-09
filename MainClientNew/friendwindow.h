@@ -20,6 +20,8 @@ public:
    void  addFriend(QString username);
    void setLabels();
 
+   void setUsername(QString id);
+
 private slots:
 
    void onNewFriend(QString id);
@@ -44,7 +46,10 @@ private slots:
 
     void onNewChat(QString data);
 
+
+
 private:
+    QString username;
     Ui::FriendWindow *ui;
     int j=0;
     std::vector<QString>friends;
