@@ -18,6 +18,8 @@ FileExplorar::FileExplorar(QWidget *parent) :
     filemodel->setFilter(QDir::NoDotAndDotDot | QDir::Files);
     filemodel->setRootPath(spath);
     ui->listView->setModel(filemodel);
+    connect(exsocket,SIGNAL(fileUpload()),this,SLOT(upLoadFile()));
+    connect(exsocket,SIGNAL(fileUpStatus(bool)),this,SLOT(fileStatus(bool)));
 
     filename = nullptr;
 
@@ -36,53 +38,70 @@ void FileExplorar::on_treeView_clicked(const QModelIndex &index)
 
     ui->listView->setRootIndex(filemodel->setRootPath(spath));
     ui->listView->setModel(filemodel);
-    qDebug() << spath;
+    //qDebug() << spath;
 }
 
 void FileExplorar::on_listView_clicked(const QModelIndex &index)
 {
     filepath = filemodel->fileInfo(index).absoluteFilePath();
     filename = filemodel->fileInfo(index).fileName();
-    qDebug() << filepath<<' '<<filename;
+    //qDebug() << filepath<<' '<<filename;
 }
 
 void FileExplorar::on_send_button_clicked()
 {
     if(filename == nullptr)
         QMessageBox::warning(this,"Caution","No File Selected");
+    else if(file!=nullptr)
+        QMessageBox::information(this,"Wait", "wait for file finished");
     else
     {
         file = new QFile(filepath);
         file->open(QIODevice::ReadOnly);
+        filesize = file->size();
+        curfileposition =0;
         QString cmd="download["+filename+"]["+QString::number(file->size())+"]["+revceiver+"]";
         QByteArray data;
         data.append(cmd);
         exsocket->socketWrite(data);
-        exsocket->socketRead();
-        long long sz=file->size() ,cur=0;
-        while (!file->atEnd()) {
-
-            QByteArray data =  "file----";
-            data.append(file->read(1000));
-            exsocket->socketWrite(data);
-            exsocket->socketRead();
-            cur+=data.size()-8;
-            ui->progressBar->setValue(cur*100/sz);
-        }
-        exsocket->socketWrite("endofile");
-        cmd = QString(exsocket->socketRead());
-        cmd=cmd.mid(0,8);
-        if(cmd=="uploaded")
-            QMessageBox::information(this,"Done?","Upload Successfull");
-        else {
-            QMessageBox::warning(this,"Done?","Upload failed");
-        }
-
     }
 
 }
 
+void FileExplorar::upLoadFile()
+{
+    QByteArray data;
+    QString siz;
+    if(!file->atEnd())
+    {
+        data.append("["+QString::number(file->bytesAvailable()>50000? 50000:file->bytesAvailable())+"]");
+        data.append(file->read(50000));
+        curfileposition+=data.size();
+        exsocket->socketWrite(data);
+        ui->progressBar->setValue(curfileposition*100/filesize);
+    }
+    else
+    {
+        file->close();
+        file=nullptr;
+        exsocket->socketWrite("endofile");
+    }
+}
+
+void FileExplorar::fileStatus(bool status)
+{
+    if(status)
+    {
+        QMessageBox::information(this,"Done?","Upload Successfull");
+    }
+    else
+    {
+        QMessageBox::warning(this,"Done?","Upload failed");
+    }
+}
+
 void FileExplorar::on_cancel_button_clicked()
 {
+    exsocket->socketWrite("endofile");
     filepath = nullptr;
 }

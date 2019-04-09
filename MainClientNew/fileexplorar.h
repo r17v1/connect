@@ -36,12 +36,17 @@ private slots:
 
     void on_cancel_button_clicked();
 
+    void upLoadFile();
+
+    void fileStatus(bool status);
+
 private:
     Ui::FileExplorar *ui;
     QFileSystemModel *dirmodel;
     QFileSystemModel *filemodel;
     QFile *file;
     QString filepath, filename, revceiver;
+    long long curfileposition, filesize;
 };
 
 #endif // FILEEXPLORAR_H

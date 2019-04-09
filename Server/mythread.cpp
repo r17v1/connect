@@ -1,5 +1,4 @@
 #include "mythread.h"
-#include "filereceiver.h"
 #include<iostream>
 
 //constructor
@@ -35,7 +34,7 @@ void MyThread::readyRead()
 {
     QByteArray  data = socket->readAll();
     string command;
-    FileReceiver file;
+    qDebug() <<data.size();
 
     //the first 8 chars of the incomming data from client represents the request command. The for loop extracts that.
     command=data.toStdString().substr(0,8); //login---[user][pass]
@@ -190,6 +189,8 @@ void MyThread::readyRead()
     //File receiving from User; format = "download[filename][filesize][receiver]"
     else if(user!=nullptr&&command=="download"&&user->getUploadStatus()==false)
     {
+        file = new FileReceiver;
+        filesync=0;
         user->setUploadStatus(true);
         QString cmd(data) , filename, filesize;
         int i=cmd.indexOf('[')+1;
@@ -204,34 +205,46 @@ void MyThread::readyRead()
 
 
         bool ok;
-        file.setFilePath(filename,user->getFolderPath(), filesize.toLongLong(&ok,10));           //set user folder path for storing file;
-        socket->write("download started");
+        file->setFilePath(filename,user->getFolderPath(), filesize.toLongLong(&ok,10));           //set user folder path for storing file;
+        socket->write("upload--");
         socket->flush();
 
 
-    }
-    else if(user!=nullptr&&command=="file----"&&user->getUploadStatus()==true)
-    {
-        QByteArray filedata(data);
-        filedata.remove(0,8);
-        file.fileWrite(filedata);
-        socket->write("file is downloading");
-        socket->flush();
     }
     else if(user!=nullptr&&command=="endofile"&&user->getUploadStatus()==true)
     {
-        if(file.checkHealthCloseFile())
+        if(file->checkHealthCloseFile())
         {
-            socket->write("uploaded");
+            socket->write("dwnloded");
             socket->flush();
             qDebug() <<"file uploaded";
         }
         else {
-            socket->write("uploadff");
+            socket->write("dwnlodff");
             socket->flush();
             qDebug() <<"file not uploaded";
         }
         user->setUploadStatus(false);
+    }
+    else if(user!=nullptr&&user->getUploadStatus()==true)
+    {
+        QString cmd(data);
+        bool ok;
+        int i=cmd.indexOf('[')+1;
+        int k=cmd.indexOf(']');
+        long long sz=cmd.mid(i,k-i).toLongLong(&ok,10);
+        data.remove(0,k-i+2);
+        qDebug()<<data.size()<<" "<<sz;
+
+        file->fileWrite(data);
+        if(data.size()<sz)
+            filesync+=data.size();
+        if(filesync==sz||data.size()==sz)
+        {
+            filesync=0;
+            socket->write("upload--");
+            socket->flush();
+        }
     }
     else if (user!=nullptr&&command=="addfrnd-")//adds contact, format addfrnd-[username]
     {

@@ -25,6 +25,8 @@ signals:
     void signup(bool);
     void newFriend(QString);
     void newMsg(QString);
+    void fileUpload();
+    void fileUpStatus(bool);
 
 public slots:
     void readyRead();

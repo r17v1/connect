@@ -7,6 +7,7 @@
 #include<queue>
 #include"global.h"
 #include"database.h"
+#include "filereceiver.h"
 
 #include"user.h"
 using namespace std;
@@ -30,6 +31,8 @@ private:
     QTcpSocket *socket;  //socket pointing to the client connected to this thread
     int socketDescriptor;
     User *user; //after log in whis will point to the user who's socket is connected to this thread.
+    FileReceiver *file;
+    long long filesync;
 
 
 };
