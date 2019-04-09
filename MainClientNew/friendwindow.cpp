@@ -63,6 +63,7 @@ FriendWindow::~FriendWindow()
 }
 void FriendWindow::setLabels()
 {
+    ui->groupBox->setTitle("Logged in as "+username);
     for(int i=j;i<j+5;i++){
         if(i<friends.size())
         {
