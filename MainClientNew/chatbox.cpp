@@ -38,9 +38,11 @@ void ChatBox::onNewChat(QString data)
         msg.push_back(data[i]);
     }
 
-    if(sender=="me")
+
+
+    if(sender=="me" && reciver==id)
     ui->textBrowser->append("ME: "+msg+"\n");
-    else
+    else if(sender==id)
         ui->textBrowser->append(sender+": "+msg+"\n");
 }
 
