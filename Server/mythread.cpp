@@ -154,15 +154,18 @@ void MyThread::readyRead()
             //deciphers username of person to whom the message will be sent, and the message it self
             //the format is message-[username of recipent][message] eg message-[r17v1]["hello"]
 
+
+
             recipent=data.toStdString().substr(start+1,end-start-1);//start from index('[')+1 and size of sub str will index('[')-index-1
             message=data.toStdString().substr(end+2,last-end-2);    //start from index(']')+2 cuz "][" and size of sub str will be index(']')-index-2
-
+            Database::sqlQuerry( "insert into message values(\'"+this->user->getID()+"\', \'"+recipent +"\', \'"+message+"\');");
 
             //adds a new message to both users lists. Also lets them know who the sender is and who will recieve, and that this is not an old message
-            global::users[recipent]->addMessage(this->user->getID(),"me",message,false);
             this->user->addMessage("me",recipent,message,false);
+            global::users[recipent]->addMessage(this->user->getID(),"me",message,false);
 
-            Database::sqlQuerry( "insert into message values(\'"+this->user->getID()+"\', \'"+recipent +"\', \'"+message+"\');");
+
+
 
 
 
@@ -268,6 +271,7 @@ void MyThread::readyRead()
 
 
     }
+
 
 //    else
 //    {

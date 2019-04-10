@@ -56,7 +56,7 @@ void User::addMessage(string sender,string receiver, string message,bool old) //
 
      //std::cout<<format<<std::endl;
     messages.push_back(format);
-    if (old==false) //if this is a new message only then this message needs to be sent to the client
+    if (old==false && validity) //if this is a new message only then this message needs to be sent to the client
     {
         pendingMessages.push(format);
         emit needUpdate();
@@ -98,14 +98,14 @@ void User::initData(QTcpSocket *socket)
     {
         socket->write(i.c_str());
         socket->flush();
-        socket->waitForReadyRead(-1);
+        socket->waitForReadyRead(1000);
         socket->readAll();
     }
     for(auto i:friends)
     {
         socket->write(i.c_str());
         socket->flush();
-        socket->waitForReadyRead(-1);
+        socket->waitForReadyRead(1000);
         socket->readAll();
     }
 }
