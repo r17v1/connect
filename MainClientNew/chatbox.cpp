@@ -22,21 +22,18 @@ void ChatBox::onNewChat(QString data)
 
 
     int i=9;
+    int k= data.indexOf("]",i);
+    sender=data.mid(i,k-i);
 
-    for(;data[i]!=']';i++)
-    {
-        sender.push_back(data[i]);
-    }
-    i+=2;
-    for(;data[i]!=']';i++)
-    {
-        reciver.push_back(data[i]);
-    }
-    i+=2;
-    for(;data[i]!=']';i++)
-    {
-        msg.push_back(data[i]);
-    }
+    i=k+2;
+    k=data.indexOf("]",i);
+    reciver=data.mid(i,k-i);
+
+    i=k+2;
+    k=data.lastIndexOf(']');
+    msg=data.mid(i,k-i);
+
+    qDebug()<<sender<<' '<<reciver<<' '<<msg<<data<<' '<< k <<' '<< i;
 
 
 
@@ -100,21 +97,18 @@ void ChatBox::addChat(QString data)
 
 
     int i=9;
+    int k= data.indexOf("]",i);
+    sender=data.mid(i,k-i);
 
-    for(;data[i]!=']';i++)
-    {
-        sender.push_back(data[i]);
-    }
-    i+=2;
-    for(;data[i]!=']';i++)
-    {
-        reciver.push_back(data[i]);
-    }
-    i+=2;
-    for(;data[i]!=']';i++)
-    {
-        msg.push_back(data[i]);
-    }
+    i=k+2;
+    k=data.indexOf("]",i);
+    reciver=data.mid(i,k-i);
+
+    i=k+2;
+    k=data.lastIndexOf(']');
+    msg=data.mid(i,k-i);
+
+    qDebug()<<sender<<' '<<reciver<<' '<<msg<<data<<' '<< k <<' '<< i;
 
     if(sender=="me")
     ui->textBrowser->append("ME: "+msg+"\n");

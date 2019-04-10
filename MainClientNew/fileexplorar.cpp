@@ -102,6 +102,7 @@ void FileExplorar::fileStatus(bool status)
 
 void FileExplorar::on_cancel_button_clicked()
 {
+    file->close();
+    file=nullptr;
     exsocket->socketWrite("endofile");
-    filepath = nullptr;
 }

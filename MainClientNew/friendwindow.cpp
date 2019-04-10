@@ -34,16 +34,13 @@ void FriendWindow::onNewChat(QString data)
 
 
     int i=9;
+    int k= data.indexOf("]",i);
+    sender=data.mid(i,k-i);
 
-    for(;data[i]!=']';i++)
-    {
-        sender.push_back(data[i]);
-    }
-    i+=2;
-    for(;data[i]!=']';i++)
-    {
-        reciver.push_back(data[i]);
-    }
+    i=k+2;
+    k=data.indexOf("]",i);
+    reciver=data.mid(i,k-i);
+
     qDebug()<<sender<<' '<<reciver;
     if(sender=="me")
         chats[reciver].push_back(data);
@@ -89,7 +86,7 @@ void FriendWindow::setLabels()
 void FriendWindow::on_pushButton_clicked()
 {
     ChatBox *c=new ChatBox(this);
-    this->hide();
+
     c->setReceiver(ui->pushButton->text());
     for(int i=0;i<chats[ui->pushButton->text()].size();i++)
     {
@@ -100,7 +97,7 @@ void FriendWindow::on_pushButton_clicked()
 
 
     c->show();
-    this->show();
+
 }
 
 void FriendWindow::on_groupBox_objectNameChanged(const QString &objectName)
@@ -128,7 +125,7 @@ void FriendWindow::on_pushButton_2_clicked()
 {
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_2->text());
-    this->hide();
+
     for(int i=0;i<chats[ui->pushButton_2->text()].size();i++)
     {
         c->addChat(chats[ui->pushButton_2->text()][i]);
@@ -137,14 +134,14 @@ void FriendWindow::on_pushButton_2_clicked()
 
 
     c->show();
-    this->show();
+
 }
 
 void FriendWindow::on_pushButton_3_clicked()
 {
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_3->text());
-    this->hide();
+
     for(int i=0;i<chats[ui->pushButton_3->text()].size();i++)
     {
         c->addChat(chats[ui->pushButton_3->text()][i]);
@@ -153,14 +150,14 @@ void FriendWindow::on_pushButton_3_clicked()
 
 
     c->show();
-    this->show();
+
 }
 
 void FriendWindow::on_pushButton_4_clicked()
 {
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_4->text());
-    this->hide();
+
     for(int i=0;i<chats[ui->pushButton_4->text()].size();i++)
     {
         c->addChat(chats[ui->pushButton_4->text()][i]);
@@ -169,14 +166,14 @@ void FriendWindow::on_pushButton_4_clicked()
 
 
     c->show();
-    this->show();
+
 }
 
 void FriendWindow::on_pushButton_5_clicked()
 {
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_5->text());
-    this->hide();
+
     for(int i=0;i<chats[ui->pushButton_5->text()].size();i++)
     {
         c->addChat(chats[ui->pushButton_5->text()][i]);
@@ -185,7 +182,7 @@ void FriendWindow::on_pushButton_5_clicked()
 
 
     c->show();
-    this->show();
+
 }
 
 void FriendWindow::on_AddFriendButton_clicked()

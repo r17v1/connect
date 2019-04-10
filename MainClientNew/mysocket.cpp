@@ -20,7 +20,7 @@ void MySocket::wrr(int i)
 
 bool MySocket::doConnect()
 {
-    socket->connectToHost("192.168.1.150",1234);
+    socket->connectToHost("localhost",1234);
     if(socket->waitForConnected(10000))
         return true;
     else  return false;
@@ -36,8 +36,9 @@ QByteArray MySocket::socketRead()
 
 void MySocket::readyRead()
 {
-    //qDebug()<<"yes";
+
     QByteArray data=socket->readAll();
+     qDebug()<<data;
 
     if(data.mid(0,8)=="loginT--")
             emit login(true);

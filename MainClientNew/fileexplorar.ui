@@ -64,15 +64,15 @@
    <sender>cancel_button</sender>
    <signal>clicked()</signal>
    <receiver>FileExplorar</receiver>
-   <slot>reject()</slot>
+   <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>634</x>
-     <y>415</y>
+     <x>610</x>
+     <y>408</y>
     </hint>
     <hint type="destinationlabel">
-     <x>515</x>
-     <y>390</y>
+     <x>635</x>
+     <y>421</y>
     </hint>
    </hints>
   </connection>
