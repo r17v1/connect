@@ -16,7 +16,7 @@ class MyThread : public QThread
 {
     Q_OBJECT
 public:
-    explicit MyThread(int id, QObject *parent = 0);
+    explicit MyThread(int id, QObject *parent = nullptr);
     void run();
 signals:
     void error(QTcpSocket::SocketError socketerror);

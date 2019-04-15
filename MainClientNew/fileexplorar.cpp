@@ -20,7 +20,7 @@ FileExplorar::FileExplorar(QWidget *parent) :
     ui->listView->setModel(filemodel);
     connect(exsocket,SIGNAL(fileUpload()),this,SLOT(upLoadFile()));
     connect(exsocket,SIGNAL(fileUpStatus(bool)),this,SLOT(fileStatus(bool)));
-
+    file=nullptr;
     filename = nullptr;
 
 
@@ -102,7 +102,9 @@ void FileExplorar::fileStatus(bool status)
 
 void FileExplorar::on_cancel_button_clicked()
 {
-    file->close();
-    file=nullptr;
-    exsocket->socketWrite("endofile");
+    if(file != nullptr)
+        file->seek(file->size());
+    else {
+        this->close();
+    }
 }

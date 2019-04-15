@@ -164,11 +164,6 @@ void MyThread::readyRead()
             this->user->addMessage("me",recipent,message,false);
             global::users[recipent]->addMessage(this->user->getID(),"me",message,false);
 
-
-
-
-
-
         }
 
         write("ok------");

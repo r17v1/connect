@@ -6,6 +6,7 @@ MySocket::MySocket(QObject *parent):QObject (parent)
 {
     socket = new QTcpSocket;
      connect(socket,SIGNAL(readyRead()),this,SLOT(readyRead()));
+     connect(socket,SIGNAL(disconnected()),this,SLOT(disconnected()));
 }
 
 MySocket::~MySocket()
@@ -73,7 +74,10 @@ void MySocket::readyRead()
 }
 
 
-
+void MySocket::disconnected()
+{
+    emit connectionLost();
+}
 
 void MySocket::socketWrite(QByteArray data)
 {

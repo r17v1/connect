@@ -12,7 +12,7 @@ class MySocket: public QObject
     Q_OBJECT
 
 public:
-    MySocket(QObject *parent=0);
+    MySocket(QObject *parent=nullptr);
     bool doConnect();
     ~MySocket();
     QByteArray socketRead();
@@ -27,9 +27,11 @@ signals:
     void newMsg(QString);
     void fileUpload();
     void fileUpStatus(bool);
+    void connectionLost();
 
 public slots:
     void readyRead();
+    void disconnected();
 
 
 

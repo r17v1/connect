@@ -7,9 +7,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    signUp = nullptr;
+    frnd =nullptr;
     exsocket = new MySocket;
 
     connect(exsocket,SIGNAL(login(bool)),this,SLOT(onlogin(bool)));
+    connect(exsocket,SIGNAL(connectionLost()),this,SLOT(disconnect_and_destroy()));
 
 }
 
@@ -87,4 +90,21 @@ void MainWindow::on_connet_but_clicked()
         QMessageBox::information(this, "Congratulation", "You are now connected");
         ui->conncetion_status->setChecked(true);
     }
+}
+
+void MainWindow::disconnect_and_destroy()
+{
+    if(signUp != nullptr)
+    {
+        signUp->close();
+        this->show();
+    }
+    else if(frnd != nullptr)
+    {
+        frnd->close();
+        frnd->~FriendWindow();
+        this->show();
+    }
+    ui->conncetion_status->setChecked(false);
+
 }
