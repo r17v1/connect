@@ -1,0 +1,16 @@
+INPUT(
+./debug\main.o
+./debug\myserver.o
+./debug\mythread.o
+./debug\database.o
+./debug\global.o
+./debug\user.o
+./debug\filereceiver.o
+./debug\group.o
+./debug\moc_myserver.o
+./debug\moc_mythread.o
+./debug\moc_database.o
+./debug\moc_user.o
+./debug\moc_filereceiver.o
+./debug\moc_group.o
+);

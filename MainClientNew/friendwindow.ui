@@ -18,7 +18,7 @@
     <item>
      <widget class="QGroupBox" name="groupBox">
       <property name="styleSheet">
-       <string notr="true">background-color : rgb(90, 98, 255)</string>
+       <string notr="true">background-color : rgb(239, 239, 239)</string>
       </property>
       <property name="title">
        <string>GroupBox</string>
@@ -37,7 +37,7 @@
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="styleSheet">
-          <string notr="true">background-color : rgb(85, 255, 255)</string>
+          <string notr="true">background-color : rgb(255, 255, 255)</string>
          </property>
          <property name="text">
           <string>PushButton</string>
@@ -47,7 +47,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_2">
          <property name="styleSheet">
-          <string notr="true">background-color : rgb(85, 255, 255)</string>
+          <string notr="true">background-color : rgb(255, 255, 255)</string>
          </property>
          <property name="text">
           <string>PushButton</string>
@@ -57,7 +57,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_3">
          <property name="styleSheet">
-          <string notr="true">background-color : rgb(85, 255, 255)</string>
+          <string notr="true">background-color : rgb(255, 255, 255)</string>
          </property>
          <property name="text">
           <string>PushButton</string>
@@ -67,7 +67,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_4">
          <property name="styleSheet">
-          <string notr="true">background-color : rgb(85, 255, 255)</string>
+          <string notr="true">background-color : rgb(255, 255, 255)</string>
          </property>
          <property name="text">
           <string>PushButton</string>
@@ -77,7 +77,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_5">
          <property name="styleSheet">
-          <string notr="true">background-color : rgb(85, 255, 255)</string>
+          <string notr="true">background-color : rgb(255, 255, 255)</string>
          </property>
          <property name="text">
           <string>PushButton</string>
@@ -87,7 +87,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_6">
          <property name="styleSheet">
-          <string notr="true">background-color : rgb(255, 56, 21)</string>
+          <string notr="true">background-color : rgb(247, 239, 239)</string>
          </property>
          <property name="text">
           <string>PushButton</string>
@@ -97,7 +97,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_7">
          <property name="styleSheet">
-          <string notr="true">background-color : rgb(255, 56, 21)</string>
+          <string notr="true">background-color : rgb(247, 239, 239)</string>
          </property>
          <property name="text">
           <string>PushButton</string>
@@ -115,7 +115,7 @@
      <x>0</x>
      <y>0</y>
      <width>627</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\myserver.o
+./release\mythread.o
+./release\database.o
+./release\global.o
+./release\user.o
+./release\filereceiver.o
+./release\group.o
+./release\moc_myserver.o
+./release\moc_mythread.o
+./release\moc_database.o
+./release\moc_user.o
+./release\moc_filereceiver.o
+./release\moc_group.o
+);
