@@ -21,6 +21,11 @@ public:
 
     void addChat(QString str);
 
+    void setChat(std::map<QString,std::vector<QString> > *c)
+    {
+        chats=c;
+    }
+
 private slots:
 
     void onNewChat(QString data);
@@ -37,6 +42,7 @@ private:
     Ui::ChatBox *ui;
     FileExplorar *explore;
     QString id;
+    std::map<QString,std::vector<QString> > *chats;
 };
 
 #endif // MAINWINDOW_H

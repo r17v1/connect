@@ -56,7 +56,7 @@ void User::addMessage(string sender,string receiver, string message,bool old) //
 
      //std::cout<<format<<std::endl;
     messages.push_back(format);
-    if (old==false && validity) //if this is a new message only then this message needs to be sent to the client
+    if (old==false && validity &&sender!="me") //if this is a new message only then this message needs to be sent to the client
     {
         pendingMessages.push(format);
         emit needUpdate();

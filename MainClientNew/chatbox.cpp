@@ -75,9 +75,13 @@ void ChatBox::on_pushButton_clicked()
 
 
     QString cmd = ui->lineEdit->text();
+    ui->textBrowser->append("ME: "+cmd+"\n");
 
 
+    QString cmd2="message-[me]["+id+"]["+cmd+"]";
     cmd = "message-["+id+"]["+cmd+"]";
+
+    (*chats)[id].push_back(cmd2);
     QByteArray data;
     data.append(cmd);
     exsocket->socketWrite(data);

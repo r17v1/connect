@@ -88,6 +88,7 @@ void FriendWindow::on_pushButton_clicked()
     ChatBox *c=new ChatBox(this);
 
     c->setReceiver(ui->pushButton->text());
+     c->setChat(&chats);
     for(int i=0;i<chats[ui->pushButton->text()].size();i++)
     {
         qDebug()<<chats[ui->pushButton->text()][i];
@@ -125,7 +126,7 @@ void FriendWindow::on_pushButton_2_clicked()
 {
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_2->text());
-
+     c->setChat(&chats);
     for(int i=0;i<chats[ui->pushButton_2->text()].size();i++)
     {
         c->addChat(chats[ui->pushButton_2->text()][i]);
@@ -141,7 +142,7 @@ void FriendWindow::on_pushButton_3_clicked()
 {
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_3->text());
-
+     c->setChat(&chats);
     for(int i=0;i<chats[ui->pushButton_3->text()].size();i++)
     {
         c->addChat(chats[ui->pushButton_3->text()][i]);
@@ -157,7 +158,7 @@ void FriendWindow::on_pushButton_4_clicked()
 {
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_4->text());
-
+     c->setChat(&chats);
     for(int i=0;i<chats[ui->pushButton_4->text()].size();i++)
     {
         c->addChat(chats[ui->pushButton_4->text()][i]);
@@ -173,6 +174,7 @@ void FriendWindow::on_pushButton_5_clicked()
 {
     ChatBox *c=new ChatBox(this);
     c->setReceiver(ui->pushButton_5->text());
+    c->setChat(&chats);
 
     for(int i=0;i<chats[ui->pushButton_5->text()].size();i++)
     {
