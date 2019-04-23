@@ -28,6 +28,9 @@ signals:
     void fileUpload();
     void fileUpStatus(bool);
     void connectionLost();
+    void fileSize(qint64);
+    void filedata(QByteArray);
+    void newFile(QString);
 
 public slots:
     void readyRead();

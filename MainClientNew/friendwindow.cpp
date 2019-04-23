@@ -8,6 +8,7 @@ FriendWindow::FriendWindow(QWidget *parent) :
 {
    connect(exsocket,SIGNAL(newFriend(QString)),this,SLOT(onNewFriend(QString)));
    connect(exsocket,SIGNAL(newMsg(QString)),this,SLOT(onNewChat(QString)));
+   connect(exsocket,SIGNAL(newFile(QString)),this,SLOT(onNewFile(QString)));
 
     ui->setupUi(this);
     ui->groupBox->setTitle("Logged in as "+username);
@@ -54,6 +55,24 @@ void FriendWindow::onNewFriend(QString id)
     setLabels();
 }
 
+void FriendWindow::onNewFile(QString data)
+{
+    QString sender;
+    QString reciver;
+
+
+    int i=9;
+    int k= data.indexOf("]",i);
+    sender=data.mid(i,k-i);
+
+    i=k+2;
+    k=data.indexOf("]",i);
+    reciver=data.mid(i,k-i);
+    qDebug()<<"file sender"<<sender;
+
+    files[sender].push_back(data);
+}
+
 FriendWindow::~FriendWindow()
 {
     delete ui;
@@ -61,7 +80,7 @@ FriendWindow::~FriendWindow()
 void FriendWindow::setLabels()
 {
     ui->groupBox->setTitle("Logged in as "+username);
-    for(int i=j;i<j+5;i++){
+    for(long long i=j; i<j+5; i++){
         if(i<friends.size())
         {
             if(i-j==0)ui->pushButton->setText(friends[i]);
@@ -85,7 +104,7 @@ void FriendWindow::setLabels()
 
 void FriendWindow::on_pushButton_clicked()
 {
-    ChatBox *c=new ChatBox(this);
+    ChatBox *c=new ChatBox(this,ui->pushButton->text());
 
     c->setReceiver(ui->pushButton->text());
      c->setChat(&chats);
@@ -94,7 +113,10 @@ void FriendWindow::on_pushButton_clicked()
         qDebug()<<chats[ui->pushButton->text()][i];
         c->addChat(chats[ui->pushButton->text()][i]);
     }
-
+    for(qint16 i=0; i<files[ui->pushButton->text()].size(); i++)
+    {
+        c->addFile(files[ui->pushButton->text()][i]);
+    }
 
 
     c->show();
@@ -124,7 +146,7 @@ void FriendWindow::on_pushButton_7_clicked()
 
 void FriendWindow::on_pushButton_2_clicked()
 {
-    ChatBox *c=new ChatBox(this);
+    ChatBox *c=new ChatBox(this,ui->pushButton_2->text());
     c->setReceiver(ui->pushButton_2->text());
      c->setChat(&chats);
     for(int i=0;i<chats[ui->pushButton_2->text()].size();i++)
@@ -132,15 +154,17 @@ void FriendWindow::on_pushButton_2_clicked()
         c->addChat(chats[ui->pushButton_2->text()][i]);
         // qDebug()<<chats[ui->pushButton->text()][i];
     }
-
+    for(qint16 i=0; i<files[ui->pushButton_2->text()].size(); i++)
+    {
+        c->addFile(files[ui->pushButton_2->text()][i]);
+    }
 
     c->show();
-
 }
 
 void FriendWindow::on_pushButton_3_clicked()
 {
-    ChatBox *c=new ChatBox(this);
+    ChatBox *c=new ChatBox(this,ui->pushButton_3->text());
     c->setReceiver(ui->pushButton_3->text());
      c->setChat(&chats);
     for(int i=0;i<chats[ui->pushButton_3->text()].size();i++)
@@ -149,6 +173,12 @@ void FriendWindow::on_pushButton_3_clicked()
         // qDebug()<<chats[ui->pushButton_3->text()][i];
     }
 
+    for(qint16 i=0; i<files[ui->pushButton_3->text()].size(); i++)
+    {
+        c->addFile(files[ui->pushButton_3->text()][i]);
+    }
+
+
 
     c->show();
 
@@ -156,7 +186,7 @@ void FriendWindow::on_pushButton_3_clicked()
 
 void FriendWindow::on_pushButton_4_clicked()
 {
-    ChatBox *c=new ChatBox(this);
+    ChatBox *c=new ChatBox(this,ui->pushButton_4->text());
     c->setReceiver(ui->pushButton_4->text());
      c->setChat(&chats);
     for(int i=0;i<chats[ui->pushButton_4->text()].size();i++)
@@ -165,6 +195,10 @@ void FriendWindow::on_pushButton_4_clicked()
          //qDebug()<<chats[ui->pushButton_4->text()][i];
     }
 
+    for(qint16 i=0; i<files[ui->pushButton_4->text()].size(); i++)
+    {
+        c->addFile(files[ui->pushButton_4->text()][i]);
+    }
 
     c->show();
 
@@ -172,7 +206,7 @@ void FriendWindow::on_pushButton_4_clicked()
 
 void FriendWindow::on_pushButton_5_clicked()
 {
-    ChatBox *c=new ChatBox(this);
+    ChatBox *c=new ChatBox(this,ui->pushButton_5->text());
     c->setReceiver(ui->pushButton_5->text());
     c->setChat(&chats);
 
@@ -182,6 +216,10 @@ void FriendWindow::on_pushButton_5_clicked()
          //qDebug()<<chats[ui->pushButton_5->text()][i];
     }
 
+    for(qint16 i=0; i<files[ui->pushButton_5->text()].size(); i++)
+    {
+        c->addFile(files[ui->pushButton_5->text()][i]);
+    }
 
     c->show();
 

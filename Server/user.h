@@ -27,6 +27,7 @@ public:
     void setUploadStatus(bool stat);
     bool getUploadStatus();
     void logOut();
+    void addFile(QString sender, QString receiver, QString filename, bool old = false);
 
 signals:
     void needUpdate();
@@ -43,6 +44,8 @@ private:
     queue<string> pendingMessages;      //new not yet sent messages
     list<string> friends;               //All friends
     queue<string>pendingFriends;        //new, not yet sent to client friends
+    QList<QString> files;
+    queue<QString> pendingFiles;
 
 
 };

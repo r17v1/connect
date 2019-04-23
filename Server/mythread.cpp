@@ -34,7 +34,7 @@ void MyThread::readyRead()
 {
     QByteArray  data = socket->readAll();
     string command;
-    qDebug() <<data.size();
+    //qDebug() <<data;
 
     //the first 8 chars of the incomming data from client represents the request command. The for loop extracts that.
     command=data.toStdString().substr(0,8); //login---[user][pass]
@@ -190,20 +190,23 @@ void MyThread::readyRead()
         file = new FileReceiver;
         filesync=0;
         user->setUploadStatus(true);
-        QString cmd(data) , filename, filesize;
+
+        QString cmd(data) , filesize;
         int i=cmd.indexOf('[')+1;
         int k=cmd.indexOf(']');
-        filename=cmd.mid(i,k-i);
-        qDebug() << filename;
+        file->setFilename(cmd.mid(i,k-i));
+        file->setFilesender(QString::fromStdString(user->getID()));
 
         k+=2;
         i=cmd.indexOf(']',k);
         filesize = cmd.mid(k,i-k);
-        qDebug() << filesize;
 
+        k=i+2;
+        i=cmd.lastIndexOf(']');
+        file->setFilereceiver(cmd.mid(k,i-k));
 
         bool ok;
-        file->setFilePath(filename,user->getFolderPath(), filesize.toLongLong(&ok,10));           //set user folder path for storing file;
+        file->setFilePath(file->getFilename(),user->getFolderPath(), filesize.toLongLong(&ok,10), true);           //set user folder path for storing file;
         socket->write("upload--");
         socket->flush();
 
@@ -216,6 +219,11 @@ void MyThread::readyRead()
             socket->write("dwnloded");
             socket->flush();
             qDebug() <<"file uploaded";
+
+            global::users[file->getFilereceiver().toStdString()]->addFile(file->getFilesender(),"me",file->getFilename(),false);
+            qDebug()<<"global error";
+            Database::sqlQuerry( "insert into file_log values(\'"+this->user->getID()+"\','"+file->getFilename().toStdString()+"','"+file->getFilereceiver().toStdString()+"');");
+            qDebug() <<"database error hoy nai";
         }
         else {
             socket->write("dwnlodff");
@@ -244,6 +252,47 @@ void MyThread::readyRead()
             socket->flush();
         }
     }
+    else if(user!=nullptr&&command=="upload--")
+    {
+        file = new FileReceiver;
+
+        QString cmd(data) , filename, sndr;
+        int i=cmd.indexOf('[')+1;
+        int k=cmd.indexOf(']');
+        filename=cmd.mid(i,k-i);
+        qDebug() << filename;
+
+        k+=2;
+        i=cmd.indexOf(']',k);
+        sndr = cmd.mid(k,i-k);
+        qDebug() << sndr;
+
+        file->setFilePath(filename,"C:/ConnectServer/"+sndr,-1,false);
+
+        cmd = "filesize"+QString::number(file->getFileSize());
+        qDebug()<<cmd;
+
+        QByteArray dt; dt.append(cmd);
+
+        socket->write(dt);
+
+    }
+    else if(user!=nullptr&&command=="upfldata")
+    {
+        QByteArray tmp=file->fileSend(), rwdata;
+        if(tmp==nullptr)
+            socket->write("endofile");
+        else {
+            rwdata.append("["+QString::number(tmp.size())+"]");
+            rwdata.append(tmp);
+            socket->write(rwdata);
+        }
+    }
+    else if(user!=nullptr&&command=="upflcnld")
+    {
+        file->setFileAtEnd();
+        socket->write("endofile");
+    }
     else if (user!=nullptr&&command=="addfrnd-")//adds contact, format addfrnd-[username]
     {
         size_t start=data.toStdString().find_first_of('[');
@@ -268,12 +317,7 @@ void MyThread::readyRead()
     }
 
 
-//    else
-//    {
-//        write("invalid-");
-//    }
-
-//    qDebug()<<socketDescriptor<<" Data in: "<< data;
+    //qDebug()<<socketDescriptor<<" Data in: "<< data;
 
 }
 
@@ -299,5 +343,6 @@ void MyThread::write(QByteArray str) //sends the user data (str)
 
 void MyThread::updateUser()
 {
+    qDebug() << "need update called";
     user->update(socket);
 }

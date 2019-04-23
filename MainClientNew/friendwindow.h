@@ -19,7 +19,6 @@ public:
     ~FriendWindow();
    void  addFriend(QString username);
    void setLabels();
-
    void setUsername(QString id);
 
 private slots:
@@ -46,6 +45,8 @@ private slots:
 
     void onNewChat(QString data);
 
+    void onNewFile(QString data);
+
 
 
 private:
@@ -54,7 +55,7 @@ private:
     int j=0;
     std::vector<QString>friends;
     std::map<QString,std::vector<QString> > chats;
-
+    QMap<QString,QVector<QString>> files;
 
 };
 

@@ -21,10 +21,12 @@ class FileExplorar : public QDialog
     Q_OBJECT
 
 public:
-    explicit FileExplorar(QWidget *parent = nullptr);
+    explicit FileExplorar(QWidget *parent = nullptr, bool state = false);
     ~FileExplorar();
 
-    void setReceiver();
+    void setReceiver(QString name);
+    void setSender(QString name);
+    void setFileName(QString fnm);
 
 private slots:
 
@@ -40,13 +42,21 @@ private slots:
 
     void fileStatus(bool status);
 
+    void downloadFile(QByteArray data);
+
+    void setFilesize(qint64 sz);
+    void reject();
+
 private:
     Ui::FileExplorar *ui;
     QFileSystemModel *dirmodel;
     QFileSystemModel *filemodel;
     QFile *file;
-    QString filepath, filename, revceiver;
+    QString filepath, filename, revceiver, sender;
     long long curfileposition, filesize;
+    qint64 filesync;
+    QString action;
+    bool downloadCanceled;
 };
 
 #endif // FILEEXPLORAR_H

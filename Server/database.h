@@ -23,6 +23,7 @@ private:
     static void loadUsers();                             //loads all users from database to the users map
     static void loadMessages();
     static void loadFriends();
+    static void loadFiles();
 
     static void printUsers();                           //prints all user names
 

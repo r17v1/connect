@@ -32,20 +32,6 @@ void MainWindow::on_pushButton_SignIn_clicked()
     exsocket->socketWrite(data);
     exsocket->wrr(1000);
 
-/*    cmd=QString(exsocket->socketRead());
-
-    if(cmd=="loginT--")
-    {
-        QMessageBox::information(this,"SignIn", "Sign In Successful!");
-
-        this->hide();
-        frnd=new FriendWindow(this);
-        frnd->show();
-    }
-    else
-    {
-        QMessageBox::warning(this,"SignIn", "Username and Password do not match");
-    }*/
 }
 
 void MainWindow::onlogin(bool t)
@@ -59,8 +45,6 @@ void MainWindow::onlogin(bool t)
         frnd->setUsername(ui->lineEdit_username->text());
         frnd->setLabels();
         frnd->show();
-
-
         //exsocket->socketWrite("initdata");
     }
     else
@@ -106,5 +90,4 @@ void MainWindow::disconnect_and_destroy()
         this->show();
     }
     ui->conncetion_status->setChecked(false);
-
 }

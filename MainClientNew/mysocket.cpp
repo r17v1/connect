@@ -21,7 +21,7 @@ void MySocket::wrr(int i)
 
 bool MySocket::doConnect()
 {
-    socket->connectToHost("localhost",1234);
+    socket->connectToHost("192.168.1.150",1234);
     if(socket->waitForConnected(10000))
         return true;
     else  return false;
@@ -39,7 +39,7 @@ void MySocket::readyRead()
 {
 
     QByteArray data=socket->readAll();
-     qDebug()<<data;
+    //qDebug()<<data;
 
     if(data.mid(0,8)=="loginT--")
             emit login(true);
@@ -60,16 +60,28 @@ void MySocket::readyRead()
     else if(data.mid(0,8)=="message-")
     {
       emit newMsg(data);
-
-        //qDebug()<<"on msg";
+       //qDebug()<<"on msg";
         socketWrite("ok");
     }
+    else if(data.mid(0,8)=="file----")
+        emit newFile(data);
     else if(data.mid(0,8)=="upload--")
         emit fileUpload();
     else if(data.mid(0,8)=="dwnloded")
         emit fileUpStatus(true);
     else if(data.mid(0,8)=="dwnlodff")
         emit fileUpStatus(false);
+    else if(data.mid(0,8)=="filesize")
+    {
+        data.remove(0,8);
+        QString cmd(data);
+        bool ok;
+        emit fileSize(cmd.toLongLong(&ok,10));
+    }
+    else if(data.mid(0,8)=="endofile")
+        emit fileUpStatus(true);
+    else
+        emit filedata(data);
 
 }
 

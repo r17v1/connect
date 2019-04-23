@@ -14,16 +14,16 @@ void User::setLoginDetails(string id, string password) //sets the required usern
 }
 void User::update(QTcpSocket *socket)                 //updates messages and friend lists.
 {
-    while(pendingFriends.size())
+    if(pendingFriends.size())
     {
         socket->write(pendingFriends.front().c_str());
         socket->flush();
         pendingFriends.pop();
         socket->waitForReadyRead(1000);
-       // socket->readAll();
+        socket->readAll();
     }
 
-    while(pendingMessages.size())
+    if(pendingMessages.size())
     {
         //std::cout<<pendingMessages.front()<<std::endl;
         socket->write(pendingMessages.front().c_str());
@@ -32,6 +32,15 @@ void User::update(QTcpSocket *socket)                 //updates messages and fri
         socket->waitForReadyRead(1000);
         //socket->readAll();
     }
+    qDebug()<<"sending pending files" <<pendingFiles.size();
+    if(pendingFiles.size())
+    {
+        socket->write(pendingFiles.front().toStdString().c_str());
+        socket->flush();
+        pendingMessages.pop();
+        socket->waitForReadyRead(1000);
+    }
+    qDebug()<<"pending files sent";
 }
 
 bool User::login(string password)                     //allows log in if password matches
@@ -59,6 +68,16 @@ void User::addMessage(string sender,string receiver, string message,bool old) //
     if (old==false && validity &&sender!="me") //if this is a new message only then this message needs to be sent to the client
     {
         pendingMessages.push(format);
+        emit needUpdate();
+    }
+}
+void User::addFile(QString sender, QString receiver, QString filename, bool old)
+{
+    QString format = "file----["+sender+"]["+receiver+"]["+filename+"]";
+    files.push_back(format);
+    if(old==false && validity && sender!= "me")
+    {
+        pendingFiles.push(format);
         emit needUpdate();
     }
 }
@@ -104,6 +123,14 @@ void User::initData(QTcpSocket *socket)
     for(auto i:friends)
     {
         socket->write(i.c_str());
+        socket->flush();
+        socket->waitForReadyRead(1000);
+        socket->readAll();
+    }
+    qDebug() <<files.size();
+    for(auto i:files)
+    {
+        socket->write(i.toStdString().c_str());
         socket->flush();
         socket->waitForReadyRead(1000);
         socket->readAll();

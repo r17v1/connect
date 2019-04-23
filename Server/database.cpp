@@ -10,6 +10,7 @@ void Database::initialize()
     loadUsers();
     loadFriends();
     loadMessages();
+    loadFiles();
     printUsers();
 }
 void Database::loadUsers()
@@ -18,8 +19,8 @@ void Database::loadUsers()
     db.setDatabaseName("C:/ConnectServer/accounts.db");        //path to the .db file that will hold all informations
     if(!db.open())qDebug()<<"Failed to connect to database!";//opens the database
     QSqlQuery query;
-    string command="select * from login";                   //querry
-    query.exec(command.c_str());                            //executes the querry
+    QString command="select * from login";                   //querry
+    query.exec(command);                                     //executes the querry
 
     while(query.next())                                    //fetches all the results 1 by 1
     {
@@ -36,8 +37,8 @@ void Database::loadFriends()
     db.setDatabaseName("C:/ConnectServer/accounts.db");        //path to the .db file that will hold all informations
     if(!db.open())qDebug()<<"Failed to connect to database!";//opens the database
     QSqlQuery query;
-    string command="select * from friendlist";                   //querry
-    query.exec(command.c_str());                            //executes the querry
+    QString command="select * from friendlist";                   //querry
+    query.exec(command);                            //executes the querry
 
     while(query.next())                                    //fetches all the results 1 by 1
     {
@@ -54,8 +55,8 @@ void Database::loadMessages()
     db.setDatabaseName("C:/ConnectServer/accounts.db");        //path to the .db file that will hold all informations
     if(!db.open())qDebug()<<"Failed to connect to database!";//opens the database
     QSqlQuery query;
-    string command="select * from message";                   //querry
-    query.exec(command.c_str());                            //executes the querry
+    QString command="select * from message";                   //querry
+    query.exec(command);                            //executes the querry
 
     while(query.next())                                    //fetches all the results 1 by 1
     {
@@ -68,6 +69,25 @@ void Database::loadMessages()
         global::users[receiver]->addMessage(sender,"me",message,true);
     }
     db.close();                                            //closes the database
+}
+
+void Database::loadFiles()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //database witth SQLITE driver
+    db.setDatabaseName("C:/ConnectServer/accounts.db");        //path to the .db file that will hold all informations
+    if(!db.open())qDebug()<<"Failed to connect to database!";//opens the database
+    QSqlQuery query;
+    QString command="select * from file_log";                   //querry
+    query.exec(command);                                        //executes the querry
+
+    while(query.next())
+    {
+        QString sender   = query.value(0).toString();
+        QString filename = query.value(1).toString();
+        QString receiver = query.value(2).toString();
+
+        global::users[receiver.toStdString()]->addFile(sender,"me",filename,true);
+    }
 }
 
 
