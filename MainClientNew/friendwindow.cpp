@@ -31,7 +31,7 @@ void FriendWindow::onNewChat(QString data)
     QString sender;
     QString reciver;
     QString msg;
-    qDebug()<<"Signal called";
+   // qDebug()<<"Signal called";
 
 
     int i=9;
@@ -42,7 +42,7 @@ void FriendWindow::onNewChat(QString data)
     k=data.indexOf("]",i);
     reciver=data.mid(i,k-i);
 
-    qDebug()<<sender<<' '<<reciver;
+   // qDebug()<<sender<<' '<<reciver;
     if(sender=="me")
         chats[reciver].push_back(data);
     else chats[sender].push_back(data);
@@ -50,7 +50,7 @@ void FriendWindow::onNewChat(QString data)
 
 void FriendWindow::onNewFriend(QString id)
 {
-    qDebug()<<"yes";
+    //qDebug()<<"yes";
     friends.push_back(id);
     setLabels();
 }
@@ -68,7 +68,7 @@ void FriendWindow::onNewFile(QString data)
     i=k+2;
     k=data.indexOf("]",i);
     reciver=data.mid(i,k-i);
-    qDebug()<<"file sender"<<sender;
+    //qDebug()<<"file sender"<<sender;
 
     files[sender].push_back(data);
 }
@@ -110,7 +110,7 @@ void FriendWindow::on_pushButton_clicked()
      c->setChat(&chats);
     for(int i=0;i<chats[ui->pushButton->text()].size();i++)
     {
-        qDebug()<<chats[ui->pushButton->text()][i];
+        //qDebug()<<chats[ui->pushButton->text()][i];
         c->addChat(chats[ui->pushButton->text()][i]);
     }
     for(qint16 i=0; i<files[ui->pushButton->text()].size(); i++)

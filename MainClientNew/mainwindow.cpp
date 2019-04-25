@@ -23,14 +23,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_SignIn_clicked()
 {
+    if(exsocket->isconnected()==false && exsocket->doConnect()==false)
+    {
+        QMessageBox::warning(this,"Caution","Couldn't connect to the server");
+    }
+    else {
 
-    QString username = ui->lineEdit_username->text();
-    QString password = ui->lineEdit_password->text();
-    QString cmd = "login---["+username+"]["+password+"]";
-    QByteArray data;
-    data.append(cmd);
-    exsocket->socketWrite(data);
-    exsocket->wrr(1000);
+        QString username = ui->lineEdit_username->text();
+        QString password = ui->lineEdit_password->text();
+        QString cmd = "login---["+username+"]["+password+"]";
+        QByteArray data;
+        data.append(cmd);
+        exsocket->socketWrite(data);
+        exsocket->wrr(1000);
+    }
 
 }
 
@@ -57,6 +63,15 @@ void MainWindow::onlogin(bool t)
 
 void MainWindow::on_pushButton_SignUp_clicked()
 {
+
+    if(exsocket->isconnected()==false)
+    {
+        if(exsocket->doConnect()==false)
+        {
+            QMessageBox::warning(this,"Caution","Couldn't connect to the server");
+            return;
+        }
+    }
     hide();
     signUp = new SignUp(this);
     signUp->setSocket(exsocket);
@@ -64,17 +79,6 @@ void MainWindow::on_pushButton_SignUp_clicked()
     show();
 }
 
-void MainWindow::on_connet_but_clicked()
-{
-    if(exsocket->doConnect()==false)
-    {
-        QMessageBox::warning(this,"Caution","Couldn't connect to the server");
-    }
-    else {
-        QMessageBox::information(this, "Congratulation", "You are now connected");
-        ui->conncetion_status->setChecked(true);
-    }
-}
 
 void MainWindow::disconnect_and_destroy()
 {
@@ -89,5 +93,4 @@ void MainWindow::disconnect_and_destroy()
         frnd->~FriendWindow();
         this->show();
     }
-    ui->conncetion_status->setChecked(false);
 }

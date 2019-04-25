@@ -144,7 +144,7 @@ void ChatBox::addChat(QString data)
     k=data.lastIndexOf(']');
     msg=data.mid(i,k-i);
 
-    qDebug()<<sender<<' '<<reciver<<' '<<msg<<data<<' '<< k <<' '<< i;
+   // qDebug()<<sender<<' '<<reciver<<' '<<msg<<data<<' '<< k <<' '<< i;
 
     if(sender=="me")
     ui->textBrowser->append("ME: "+msg+"\n");

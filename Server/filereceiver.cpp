@@ -42,7 +42,7 @@ QByteArray FileReceiver::fileSend()
 {
     if(!file->atEnd())
     {
-       return file->read(5000);
+       return file->read(10000);
     }
     else {
         file->close();

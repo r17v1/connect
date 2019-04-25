@@ -5,6 +5,7 @@ extern MySocket *exsocket;
 MySocket::MySocket(QObject *parent):QObject (parent)
 {
     socket = new QTcpSocket;
+    state = false;
      connect(socket,SIGNAL(readyRead()),this,SLOT(readyRead()));
      connect(socket,SIGNAL(disconnected()),this,SLOT(disconnected()));
 }
@@ -22,8 +23,11 @@ void MySocket::wrr(int i)
 bool MySocket::doConnect()
 {
     socket->connectToHost("192.168.1.150",1234);
-    if(socket->waitForConnected(10000))
+    if(socket->waitForConnected(1000))
+    {
+        state=true;
         return true;
+    }
     else  return false;
 }
 QByteArray MySocket::socketRead()
@@ -88,6 +92,7 @@ void MySocket::readyRead()
 
 void MySocket::disconnected()
 {
+    state=false;
     emit connectionLost();
 }
 
@@ -96,4 +101,9 @@ void MySocket::socketWrite(QByteArray data)
     socket->write(data);
     socket->waitForBytesWritten(-1);
     socket->flush();
+}
+
+bool MySocket::isconnected()
+{
+    return state;
 }

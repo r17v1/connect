@@ -18,6 +18,7 @@ public:
     QByteArray socketRead();
     void socketWrite(QByteArray data);
     void wrr(int i);
+    bool isconnected();
 
 
 signals:
@@ -40,6 +41,7 @@ public slots:
 
 private:
     QTcpSocket *socket;
+    bool state;
 };
 
 

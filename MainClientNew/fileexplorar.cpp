@@ -118,8 +118,8 @@ void FileExplorar::upLoadFile()
     QString siz;
     if(!file->atEnd())
     {
-        data.append("["+QString::number(file->bytesAvailable()>50000? 50000:file->bytesAvailable())+"]");
-        data.append(file->read(50000));
+        data.append("["+QString::number(file->bytesAvailable()>10000? 10000:file->bytesAvailable())+"]");
+        data.append(file->read(10000));
         curfileposition+=data.size();
         exsocket->socketWrite(data);
         ui->progressBar->setValue(curfileposition*100/filesize);
@@ -138,18 +138,21 @@ void FileExplorar::downloadFile(QByteArray data)
     bool ok;
     int i=cmd.indexOf('[')+1;
     int k=cmd.indexOf(']');
-    long long sz=cmd.mid(i,k-i).toLongLong(&ok,10);
-    data.remove(0,k-i+2);
-    qDebug()<<data.size()<<" "<<sz;
 
+    if(!(k==-1||i>k||i==0||k>10||i>3))
+    {
+        data.remove(0,k-i+2);
+        filetemsz =cmd.mid(i,k-i).toLongLong(&ok,10);
+    }
+    //qDebug()<<data.size()<<' '<<filetemsz;
     file->write(data);
     curfileposition+=data.size();
     if(filesize!=0)
     ui->progressBar->setValue(curfileposition*100/filesize);
 
-    if(data.size()<sz)
-        filesync+=data.size();
-    if(filesync==sz||data.size()==sz)
+
+     filesync+=data.size();
+    if(filesync==filetemsz||data.size()==filetemsz)
     {
         filesync=0;
         if(downloadCanceled)
@@ -190,7 +193,7 @@ void FileExplorar::fileStatus(bool status)
 void FileExplorar::setFilesize(qint64 sz)
 {
     filesize = sz;
-    qDebug()<<sz;
+    //qDebug()<<sz;
     exsocket->socketWrite("upfldata");
 }
 
@@ -200,6 +203,10 @@ void FileExplorar::on_cancel_button_clicked()
         file->seek(file->size());
     else if(file!=nullptr&&action=="download"){
         downloadCanceled=true;
+    }
+    else {
+        this->close();
+        //this->~FileExplorar();
     }
 }
 

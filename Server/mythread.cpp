@@ -238,14 +238,20 @@ void MyThread::readyRead()
         bool ok;
         int i=cmd.indexOf('[')+1;
         int k=cmd.indexOf(']');
-        long long sz=cmd.mid(i,k-i).toLongLong(&ok,10);
-        data.remove(0,k-i+2);
-        qDebug()<<data.size()<<" "<<sz;
+
+        if(!(k==-1||i>k||i==0||k>10||i>3))
+        {
+            data.remove(0,k-i+2);
+            filetemsz =cmd.mid(i,k-i).toLongLong(&ok,10);
+        }
+        qDebug()<<data.size()<<" "<<filetemsz;
+
 
         file->fileWrite(data);
-        if(data.size()<sz)
-            filesync+=data.size();
-        if(filesync==sz||data.size()==sz)
+
+        filesync+=data.size();
+
+        if(filesync==filetemsz||data.size()==filetemsz)
         {
             filesync=0;
             socket->write("upload--");

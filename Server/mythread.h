@@ -32,7 +32,7 @@ private:
     int socketDescriptor;
     User *user; //after log in whis will point to the user who's socket is connected to this thread.
     FileReceiver *file;
-    long long filesync;
+    long long filesync, filetemsz;
 
 
 };

@@ -37,7 +37,7 @@ void User::update(QTcpSocket *socket)                 //updates messages and fri
     {
         socket->write(pendingFiles.front().toStdString().c_str());
         socket->flush();
-        pendingMessages.pop();
+        pendingFiles.pop();
         socket->waitForReadyRead(1000);
     }
     qDebug()<<"pending files sent";

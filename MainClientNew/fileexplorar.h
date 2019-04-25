@@ -53,7 +53,7 @@ private:
     QFileSystemModel *filemodel;
     QFile *file;
     QString filepath, filename, revceiver, sender;
-    long long curfileposition, filesize;
+    long long curfileposition, filesize, filetemsz;
     qint64 filesync;
     QString action;
     bool downloadCanceled;

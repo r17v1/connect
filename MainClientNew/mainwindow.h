@@ -23,7 +23,6 @@ private slots:
 
     void on_pushButton_SignUp_clicked();
 
-    void on_connet_but_clicked();
     void disconnect_and_destroy();
 
 
