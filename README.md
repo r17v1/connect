@@ -1,4 +1,4 @@
-# cornerstone_server
+# connect_server
 Server of a messaging, file transfer and social app
 .
 .
